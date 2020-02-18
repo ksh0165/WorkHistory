@@ -29,6 +29,7 @@ class PostController extends Controller
     public function create()
     {
         //
+	return view('posts.create');
     }
 
     /**
@@ -40,6 +41,11 @@ class PostController extends Controller
     public function store(Request $request)
     {
         //
+	//$post = new Post;
+	//$post->title = $request->title;
+	//$post->description = $request->description;
+	//$post->save();
+	//return redirect('/');
     }
 
     /**
@@ -51,6 +57,9 @@ class PostController extends Controller
     public function show(Post $post)
     {
         //
+	//return view('posts.show',[
+	//    'post' => $post
+	//]);
     }
 
     /**

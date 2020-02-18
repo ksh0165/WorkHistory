@@ -1,5 +1,7 @@
 <?php
 
+use App\Post;
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,6 +14,29 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    //return view('welcome');
+    $posts = Post::orderBy('created_at','asc')->get();
+    
+    return view('posts.index',[
+        'posts' => $posts
+    ]);
 });
-Route::get('/post','PostController@index')->name('post');
+Route::post('/post',function(Request $request){
+  //$validator = Validator::make($request->all(),[
+  //  'title' => 'required|max:255',
+  //  'description' => 'required|max:255',
+  //]);
+  //if($validator->fails()){
+  //  return redirect('/')->withInput()->withErrors($validator);
+  //}
+  $post = new Post;
+  $post->title = $request->title;
+  $post->description = $request->description;
+  $post->save();
+  return redirect('/');
+});
+Route::get('/post/create','PostController@create');
+Route::delete('/post/{post}',function(Post $post){
+    $post->delete();
+    return redirect('/');
+});
