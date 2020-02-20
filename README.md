@@ -5,7 +5,7 @@ laravel project
 https://github.com/cretueusebiu/laravel-vue-spa -> laravel2
 (register, login, logout, infoupdate)
 
-https://github.com/LaravelDaily/laravel-roles-permissions-manager -> laravel3
+https://github.com/LaravelDaily/laravel-roles-permissions-manager -> loadfail
 (doshboard)
 
 # I brought it for study purposes.
