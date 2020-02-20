@@ -13,9 +13,3 @@ https://github.com/LaravelDaily/laravel-roles-permissions-manager -> laravel3
 
 [memo]
 
-
-git clone https://github.com/LaravelDaily/laravel-roles-permissions-manager.git
-composer update
-php artisan key:generate
-php artisan migrate --seed
-admin@admin.com - password
