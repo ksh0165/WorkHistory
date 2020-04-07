@@ -1,0 +1,40 @@
+.ProfileMenuContainer {
+    width: 20%;
+    float:left;
+}
+  
+.ProfileMenuContainer a {
+    background-color: #eee;
+    color: black;
+    display: block; 
+    padding: 10px;
+    text-decoration: none;
+    font-family: 'light';
+    font-size:2em;
+}
+  
+.ProfileMenuContainer a:hover {
+    background-color: #ccc;
+}
+  
+.ProfileMenuContainer a#active {
+    background-color: rgb(96, 170, 0);
+    color: white;
+}
+ 
+.Setting
+{
+    background-color:rgb(155, 155, 155);
+    width:80%;
+    height:auto;
+    float:right;
+}
+ 
+.activePage
+{
+    display:block;
+}
+.page
+{
+    display:none;
+}
