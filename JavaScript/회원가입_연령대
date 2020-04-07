@@ -1,0 +1,28 @@
+        <div class="fieldlabel"><label for="email01">연령대</label></div>
+        <label class="radio">
+            <input type="radio" name="radio" id="r1" value="1" style="display: none;"><label for="r1" style="display: inline-block;"><p style="text-align:center; background-color: yellow; border-radius: 50%;">10대</p></label>
+            <input type="radio" name="radio" id="r2" value="2" style="display: none;"><label for="r2" style="display: inline-block;"><p style="text-align:center; background-color: yellow; border-radius: 50%;">20대</p></label>
+            <input type="radio" name="radio" id="r3" value="3" style="display: none;"><label for="r3" style="display: inline-block;"><p style="text-align:center; background-color: yellow; border-radius: 50%;">30대</p></label>
+            <input type="radio" name="radio" id="r4" value="4" style="display: none;"><label for="r4" style="display: inline-block;"><p style="text-align:center; background-color: yellow; border-radius: 50%;">40대</p></label>
+            <input type="radio" name="radio" id="r5" value="5" style="display: none;"><label for="r5" style="display: inline-block;"><p style="text-align:center; background-color: yellow; border-radius: 50%;">50대</p></label>
+            <input type="radio" name="radio" id="r6" value="6" style="display: none;"><label for="r6" style="display: inline-block;"><p style="text-align:center; background-color: yellow; border-radius: 50%;">60대이상</p></label>
+        </label>
+        
+        
+        
+       $("input:radio[name=radio]").click(function(){
+        if($("input[name=radio]:checked").val() == "1"){
+                alert("10대");
+        }else if($("input[name=radio]:checked").val() == "2"){
+            alert("20대");
+        }else if($("input[name=radio]:checked").val() == "3"){
+            alert("30대");
+        }else if($("input[name=radio]:checked").val() == "4"){
+            alert("40대");
+        }else if($("input[name=radio]:checked").val() == "5"){
+            alert("50대");
+        }else if($("input[name=radio]:checked").val() == "6"){
+            alert("60대이상");
+        }
+        alert($("input[name=radio]:checked").val());
+      });
