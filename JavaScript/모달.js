@@ -4,13 +4,14 @@
     <meta charset="utf-8">
     <title>radio 값 가져오기</title>
     <link rel="stylesheet" type="text/css" href="../css/style.css">
-    <script
-  src="https://code.jquery.com/jquery-3.4.1.min.js"
-  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-  crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
+<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
-</head>
+  <script src="../js/require.js"></script>
+  <script src="../js/bootstrap.js"></script>
+  </head>
 <body>
     <script>        
         $(document).ready(function(){
@@ -23,6 +24,10 @@
             $(this).addClass('current');
             $("#"+tab_id).addClass('current');
             })
+            $("#datepicker").datepicker({
+              numberOfMonths: 1,
+              showButtonPanel: true
+            });
         })
     </script>
 <div class="container">
@@ -49,6 +54,13 @@
       </div>
        
       <p><a href="#ex1" rel="modal:open">모달창띄우기</a></p>
-</div>
+
+      <!-- calrender-->
+      <p>Date: <input type="text" id="datepicker"></p>
+      
+      <div class="demo-description">
+      <p>Localize the datepicker calendar language and format (English / Western formatting is the default).  The datepicker includes built-in support for languages that read right-to-left, such as Arabic and Hebrew.</p>
+      </div>
+    </div>
 </body>
 </html>
