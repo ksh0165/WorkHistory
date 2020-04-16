@@ -1,0 +1,17 @@
+from selenium import webdriver
+#PATH -> Chromedriver Path
+driver = webdriver.Chrome('C:\\Users\\"LOGIN ID INPUT"\\Desktop\\r_selenium\\chromedriver.exe')
+
+driver.get('') // site url
+driver.maximize_window()
+#ID / PWD INPUT gw.liwonace page info
+driver.find_element_by_id('gw_user_id').send_keys('ID INPUT')
+driver.find_element_by_id('gw_user_pw').send_keys('PWD INPUT')
+driver.find_element_by_xpath('//*[@id="loginBtn"]').click()
+
+driver.maximize_window()
+
+
+driver.find_element_by_xpath('/html/body/div[1]/div[2]/div[1]/div[1]/p/img[1]').click()
+
+driver.close()
