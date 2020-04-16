@@ -29,16 +29,22 @@
         $(function(){
             $('#start').click(function() {
                 $('.box').css('opacity','1');
+                $('.box').show();
                 const box = document.querySelector('.box');
                 box.style.animationPlayState = 'running';
                 box.style.marginTop = '228px';
             });
+            $("#end").click(function(){
+                $('.box').css('opacity','0');
+                $('.box').hide();
+            })
         });
     </script>
 
       <!--팝업 위로-->
       <div class="box">
           <!--내용 입력-->
+          <input type="button" id="end" value="닫기"/>
       </div>
       <input type="button" id="start" value="start"/>
       
