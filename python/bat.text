@@ -1,0 +1,5 @@
+@ECHO OFF
+C:\Users\hsong\AppData\Local\Programs\Python\Python37-32\python.exe "%1"
+echo
+PAUSE
+@ECHO ON
