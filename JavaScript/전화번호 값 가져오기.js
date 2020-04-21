@@ -151,9 +151,21 @@
             alert($("#mPhone1 option:selected").val(),"-",$("input[id=mPhone2]").val(),"-",$("input[id=mPhone3]").val());
             alert($("input[id=mPhone2]").val());
             alert($("input[id=mPhone3]").val());
-            var Number1 = ($("#mPhone1 option:selected").val()).toString();
-            var Number2 = ($("input[id=mPhone2]").val()).toString();
-            var Number3 = ($("input[id=mPhone3]").val()).toString();
+
+            var passRule = /^[0-9]{1,4}$/;
+            var Number1=$("#mPhone1 option:selected").val();
+            var Number2
+            var Number3
+            if(!passRule.test($("input[id=mPhone2]").val())){
+                return false;
+            }else{
+                Number2 = ($("input[id=mPhone2]").val()).toString();
+            }
+            if(!passRule.test($("input[id=mPhone3]").val())){
+                return false;
+            }else{
+                Number3 = ($("input[id=mPhone3]").val()).toString();
+            }
             var Num = Number1+"-"+Number2+"-"+Number3;
             alert(Num);
             });
