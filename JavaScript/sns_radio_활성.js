@@ -18,18 +18,26 @@
 
     <script type="text/javascript">
       $(document).ready(function () {
+        var yutubeVal;
+        var insVal;
+          // 기본 이벤트 발생
+        $("input:text[name=yutTxt]").attr("disabled",false);
+        $("input:text[name=insTxt]").attr("disabled",true);
             // 라디오버튼 클릭시 이벤트 발생
-            $("input:radio[name=radio]").click(function(){
+        $("input:radio[name=radio]").click(function(){
         
+        //var check = $('input:checkbox[id="rd2"]').is(':checked');
+        //alert(check);
         if($("input[name=radio]:checked").val() == "1"){
             $("input:text[name=yutTxt]").attr("disabled",false);
             $("input:text[name=insTxt]").attr("disabled",true);
             // radio 버튼의 value 값이 1이라면 활성화
-
+            alert($("input[id=yutTxt]").val());
         }else if($("input[name=radio]:checked").val() == "0"){
             $("input:text[name=yutTxt]").attr("disabled",true);
             $("input:text[name=insTxt]").attr("disabled",false);
             // radio 버튼의 value 값이 0이라면 비활성화
+            alert($("input[id=insTxt]").val());
         }
         });
       });
