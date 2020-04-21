@@ -21,8 +21,11 @@
         <div class="fieldlabel"><label for="userPw">패스워드</label></div>
         <div class="formfield">
         <input type="password" id="userPw" name="userpPw" maxlength="20" autocomplete="off" class="pw">
-        <span>10~15자리의 영문, 숫자, 특수문자의 입력이 가능합니다.</span>
-        </div>
+        <span id="alert-danger1" style="display: none; color: #d92742; font-weight: bold; ">10~15자리의 영문, 숫자, 특수문자를 입력해주세요.</span>
+        <span id="alert-danger2" style="display: none; color: #d92742; font-weight: bold; ">하나 이상의 특수문자를 입력해주세요.</span>
+        <span id="alert-danger3" style="display: none; color: #d92742; font-weight: bold; ">하나 이상의 숫자를 입력해주세요.</span>
+        <span id="alert-danger4" style="display: none; color: #d92742; font-weight: bold; ">하나 이상의 문자를 입력해주세요.</span>
+    </div>
         <div class="fieldlabel"><label for="userPwCheck">패스워드확인</label></div>
         <div class="formfield">
         <input type="password" id="userPwCheck" name="userPwCheck" maxlength="20" autocomplete="off" class="pwchk">
@@ -99,15 +102,15 @@
     <script>
         var pwJ = /^([0-9a-zA-Z]+){8,12}$/;
         var mainJ = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-        $("#userPw").blur(function(){
-            if(pwJ.test($('#userPw').val())){
-                console.log('true');
-                console.log(pwJ);
-            }else{
-                console.log('false');
-                console.log(pwJ);
-            }
-        });
+        // $("#userPw").blur(function(){
+        //     if(pwJ.test($('#userPw').val())){
+        //         console.log('true');
+        //         console.log(pwJ);
+        //     }else{
+        //         console.log('false');
+        //         console.log(pwJ);
+        //     }
+        // });
         $("#userId").blur(function(){
             if(mainJ.test($('#userId').val())){
                 console.log('true');
@@ -147,13 +150,44 @@
             }
             alert(DATA);
         });
-        $('.pw').focusout(function () {
+        var pwd1;
+        var oldVal;
+        $(".pw").on("propertychange change keyup paste input",function () {
             var passRule = /^.*(?=^.{10,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
-            var pwd1 = $("#userPw").val();
-            if(!passRule.test($("input[id='userPw']").val())){
-                alert("10~15자리의 영문, 숫자, 특수문자를 입력해주세요.");
-                return false;
-            };
+            var passRuleNum = /[0-9]/;
+            var passRuleStr = /[a-zA-z]/;
+            var passRuleNotStr = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/;
+            //if(!passRule.test($("input[id='userPw']").val()) && !passRuleNum.test($("input[id='userPw']").val()) && !passRuleStr.test($("input[id='userPw']").val()) && !passRuleNotStr.test($("input[id='userPw']").val())){
+            if(!passRule.test($("input[id='userPw']").val()) || !passRuleNum.test($("input[id='userPw']").val()) || !passRuleStr.test($("input[id='userPw']").val()) || !passRuleNotStr.test($("input[id='userPw']").val())){
+                $("#alert-danger1").css('display', 'inline-block');
+                $("#alert-danger2").css('display', 'inline-block');
+                $("#alert-danger3").css('display', 'inline-block');
+                $("#alert-danger4").css('display', 'inline-block');
+                if(!passRule.test($("input[id='userPw']").val()) || !passRuleNum.test($("input[id='userPw']").val()) || !passRuleStr.test($("input[id='userPw']").val()) || !passRuleNotStr.test($("input[id='userPw']").val())){
+                    if(passRule.test($("input[id='userPw']").val())){
+                        $("#alert-danger1").css('color','green');
+                    }
+                    if(passRuleNum.test($("input[id='userPw']").val())){
+                        $("#alert-danger3").css('color','green');
+                    }
+                    if(passRuleNotStr.test($("input[id='userPw']").val())){
+                        $("#alert-danger2").css('color','green');
+                    }
+                    if(passRuleStr.test($("input[id='userPw']").val())){
+                        $("#alert-danger4").css('color', 'green');
+                    }
+                }else{
+                    $("#alert-danger1").css('display', 'none');
+                    $("#alert-danger2").css('display', 'none');
+                    $("#alert-danger3").css('display', 'none');
+                    $("#alert-danger4").css('display', 'none');
+                }
+            }else { 
+                $("#alert-danger1").css('display', 'none');
+                $("#alert-danger2").css('display', 'none');
+                $("#alert-danger3").css('display', 'none');
+                $("#alert-danger4").css('display', 'none');
+            }
         });
         $('.pwchk').focusout(function () {
             var passRule = /^.*(?=^.{10,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
