@@ -66,3 +66,30 @@ console.log('http://localhost:%d',3000);
 });
 
 let study =	{"ajax" : "ajaxValue","react":"reactValue"}
+
+
+----------------------------------------------------------------------------------------------
+//3. 요청 웹서버에서 json 출력형식 변경해봄
+<script>
+    $(document).ready(function() {
+            $("#btn").click(function() {
+                var result = document.getElementById('ajaxValue');
+                $.ajax({
+                    url : "http://localhost:3000/home", // test.jsp 에서 받아옴
+                    dataType :"json", // 데이터타입을 json 으로 받아옴
+                    success : function(data) {
+                        //console.log(result.innerHTML = data);
+                        var jObj = JSON.parse(data);
+                        //result.innerHTML = jObj;
+                        //result.innerHTML = data;
+                        $.each(jObj,function(key,value){
+                            $('div').append(key + ':' + value + '<br>');
+                        });
+                    },
+                    error : function(e) {
+                        console.log(e.responseText);
+                    }
+                });
+            });
+    });
+</script>
