@@ -1,16 +1,19 @@
-import React, { Component } from 'react';
+import React, {PureComponent} from 'react';
 
-class Try extends Component{
-	render() {
-		return (
-		<li>
-			<b>{this.props.value.fruit}</b> - {this.props.index}
-			<div>콘텐츠</div>
-			<div>콘텐츠1</div>
-			<div>콘텐츠2</div>
-		</li>
-		);
-	}
+class Try extends PureComponent{
+    state = {
+        result: this.props.result,
+        try: this.props.try,
+    }
+    render(){
+        const {tryInfo} = this.props;
+        return (
+        <li>
+             <div>{tryInfo.try}</div>
+             <div>{tryInfo.result}</div>
+        </li>
+        );
+    }
 }
 
 export default Try;
