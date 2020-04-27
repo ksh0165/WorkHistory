@@ -1,0 +1,22 @@
+   DECLARE @initpath varchar(50),@count INT,@path varchar(50)
+   SET @count = 1
+   DECLARE cur CURSOR for
+   
+   SELECT photoPath FROM tblMember
+
+	OPEN cur
+	FETCH next FROM cur INTO @initpath
+	
+	WHILE @@FETCH_STATUS = 0
+	                   
+   BEGIN
+   	
+   	 SET @path = N'/tmp/'+@initpath+'.png'
+       update tblMember 
+		 set photoPath = @path
+		 where memCodNum = @count
+       SET @count = @count+1
+       FETCH next FROM cur INTO @initpath
+   END
+   CLOSE cur                              /* 커서를 닫는다 */
+   DEALLOCATE cur                        /* 커서를 해제한다 */
