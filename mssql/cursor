@@ -1,0 +1,36 @@
+--커서 데이터를 가져올 변수 선언 
+DECLARE @typeNum VARCHAR(2) 
+DECLARE @sellerCode VARCHAR(3) --커서 선언하면서 조회된 데이터를 담습니다. 
+DECLARE @Res VARCHAR(10)
+DECLARE db_cursor 
+CURSOR FOR SELECT slerCod, type1 FROM tblSeller 
+--커서를 열고 첫행에서 데이터를 꺼내서 변수에 담습니다. 
+--데이터를 꺼낼때마다 @@FETCH_STATUS가 감소 합니다. 
+
+OPEN db_cursor 
+FETCH NEXT FROM db_cursor INTO @sellerCode, @typeNum 
+--꺼낼 데이터가 없을때까지 반복하면서 
+WHILE @@FETCH_STATUS = 0 
+BEGIN --처리할 일을 하고 
+SELECT @Res = 
+CASE @typeNum
+WHEN 0 THEN '노스페이스'
+WHEN 1 THEN '아디다스'
+WHEN 2 THEN '퓨마'
+WHEN 3 THEN '자라'
+WHEN 4 THEN '시스템'
+WHEN 5 THEN '폴로'
+WHEN 6 THEN '빈폴'
+WHEN 7 THEN '블랙야크'
+WHEN 8 THEN 'k2'
+WHEN 9 THEN '프로펙스'
+when 0 THEN '이디야'
+end
+update tblSeller 
+		 set snsNm = @Res
+		 where slerCod = @sellerCode 
+--다시 데이터를 꺼냅니다. 
+FETCH NEXT FROM db_cursor INTO @sellerCode, @typeNum 
+END --커서를 삭제 합니다. 
+CLOSE db_cursor 
+--DEALLOCATE db_cursor
