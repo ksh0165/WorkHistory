@@ -1,1 +1,12 @@
 C:\Users\seong\Anaconda3\Scripts\conda.exe create --name ai
+
+# To activate this environmen
+#
+#     $ conda activate ai
+#
+# To deactivate an active env
+#
+#     $ conda deactivate
+
+
+(base) C:\>conda activate ai
