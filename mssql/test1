@@ -1,0 +1,54 @@
+DECLARE @Qty VARCHAR(2), @count int
+SET @count = 1
+WHILE @count <= 100
+	                   
+BEGIN
+   	
+UPDATE tblPay 
+set ordQty = substring(CONVERT(VARCHAR,CONVERT(int,RAND(CAST(NEWID() AS VARBINARY )) * 899999999 + 100000000)),1,1)
+where memCodNum = @count
+		 
+SET @count = @count+1
+       
+END
+   
+   
+   
+   
+ 
+   
+   
+--커서 데이터를 가져올 변수 선언 
+DECLARE @ordQty VARCHAR(2) 
+DECLARE @memCodNum VARCHAR(3) --커서 선언하면서 조회된 데이터를 담습니다. 
+DECLARE @Res VARCHAR(10)
+DECLARE db_cursor 
+CURSOR FOR SELECT memCodNum, ordQty FROM tblPay 
+--커서를 열고 첫행에서 데이터를 꺼내서 변수에 담습니다. 
+--데이터를 꺼낼때마다 @@FETCH_STATUS가 감소 합니다. 
+
+OPEN db_cursor 
+FETCH NEXT FROM db_cursor INTO @memCodNum, @ordQty 
+--꺼낼 데이터가 없을때까지 반복하면서 
+WHILE @@FETCH_STATUS = 0 
+BEGIN --처리할 일을 하고 
+SELECT @Res = 
+CASE @ordQty
+WHEN 1 THEN ' '
+WHEN 2 THEN ' '
+WHEN 3 THEN ' '
+WHEN 4 THEN '123600'
+WHEN 5 THEN '041225'
+WHEN 6 THEN '282315'
+WHEN 7 THEN '214141'
+WHEN 8 THEN '467585'
+WHEN 9 THEN '687867'
+when 0 THEN '585686'
+end
+update tblPay 
+		 set cancelTime = @Res
+		 where memCodNum = @memCodNum 
+--다시 데이터를 꺼냅니다. 
+FETCH NEXT FROM db_cursor INTO @memCodNum, @ordQty 
+END --커서를 삭제 합니다. 
+CLOSE db_cursor 
