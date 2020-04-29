@@ -10,3 +10,10 @@ C:\Users\seong\Anaconda3\Scripts\conda.exe create --name ai
 
 
 (base) C:\>conda activate ai
+
+
+
+주피터 실행
+: 
+
+C:\Users\seong\Anaconda3\Scripts\jupyter notebook
