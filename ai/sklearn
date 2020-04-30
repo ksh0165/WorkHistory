@@ -14,3 +14,53 @@ print("shape of train_input: {}".format(train_input.shape))
 print("shape of test_input: {}".format(test_input.shape))
 print("shape of train_label: {}".format(train_label.shape))
 print("shape of test_label: {}".format(test_label.shape))
+
+-----------------------------------------------------------
+pip install -U scikit-learn
+
+# anacondat prompt에서 설치 진행
+
+
+from sklearn.feature_extraction.text import CountVectorizer
+
+text_data = ['나는 배가 고프다','내일 점심 뭐먹지',
+            '내일 공부 해야겠다']
+
+count_vectorizer = CountVectorizer()
+
+count_vectorizer.fit(text_data)
+print(count_vectorizer.vocabulary_)
+
+sentence = [text_data[0]]
+print(count_vectorizer.transform(sentence).toarray())
+
+----------------------------------------------------------
+
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+text_data = ['나는 배가 고프다','내일 점심 뭐먹지',
+            '내일 공부 해야겠다']
+
+tfidf_vectorizer = TfidfVectorizer()
+
+tfidf_vectorizer.fit(text_data)
+print(tfidf_vectorizer.vocabulary_)
+
+sentence = [text_data[2]]
+print(tfidf_vectorizer.transform(sentence).toarray())
+
+---------------------------------------------------------------
+
+# JPype1 홈페이지 https://konlpy.org/ko/v0.5.1/install/#id2   pip3 install konlpy
+# https://www.lfd.uci.edu/~gohlke/pythonlibs/#jpype -> whl 파일 다운로드 및 설치
+3 python -m pip install c:\JPype1-0.7.3-cp38-cp38-win_amd64.whl
+import konlpy
+from konlpy.tag import Okt
+
+okt = Okt()
+
+text = "한글 자연어 처리는 재밋다 이제부터 열심히 해야지 ㅎㅎㅎ"
+print(okt.morphs(text))
+print(okt.morphs(text, stem=True))
+
+
