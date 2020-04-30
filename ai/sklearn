@@ -3,3 +3,14 @@ from sklearn.datasets import load_iris
 
 iris_dataset = load_iris()
 print("iris_dataset key: {}".format(iris_dataset.keys()))
+
+------------------------------------------------------------
+import sklearn
+from sklearn.model_selection import train_test_split
+
+train_input, test_input, train_label, test_label = train_test_split(iris_dataset['data'],
+                                                                   iris_dataset['target'], test_size=0.25, random_state=42)
+print("shape of train_input: {}".format(train_input.shape))
+print("shape of test_input: {}".format(test_input.shape))
+print("shape of train_label: {}".format(train_label.shape))
+print("shape of test_label: {}".format(test_label.shape))
