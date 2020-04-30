@@ -63,4 +63,11 @@ text = "한글 자연어 처리는 재밋다 이제부터 열심히 해야지 �
 print(okt.morphs(text))
 print(okt.morphs(text, stem=True))
 
+print(okt.nouns(text))
+print(okt.phrases(text))
+
+print(okt.pos(text))
+print(okt.pos(text, join=True))
+
+
 
