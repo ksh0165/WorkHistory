@@ -64,7 +64,7 @@ train_input_data = 'train_input.npy'
 train_label_data = 'train_label.npy'
 test_input_data = 'test_input.npy'
 test_label_data = 'test_label.npy'
-data_configs = 'data_configs.json'
+configs_data = 'data_configs.json'
 
 data_configs = {}
 
@@ -81,4 +81,4 @@ np.save(open(dirnm+test_label_data,'wb'),test_labels)
 
 # 데이터 사전을 json형태로 저장
 
-json.dump(data_configs, open(dirnm+data_configs,'w'), ensure_ascii=False)
+json.dump(data_configs, open(dirnm+configs_data,'w'), ensure_ascii=False)
