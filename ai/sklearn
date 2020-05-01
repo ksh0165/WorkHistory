@@ -153,4 +153,13 @@ fullstop = np.mean(train_data['document'].astype(str).apply(lambda x: '.' in x))
 print('물음표가 있는 질문: {:.2f}%'.format(qmarks * 100))
 print('마침표가 있는 질문: {:.2f}%'.format(fullstop * 100))
 ------------------------------------------------------
+import numpy as np
+import pandas as pd
+import os
+import re
+import json
+import sys
+
+sys.version
+------------------------------------------------------
 # 데이터 전처리
