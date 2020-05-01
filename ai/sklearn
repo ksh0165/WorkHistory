@@ -171,3 +171,82 @@ import sys
 sys.version
 ------------------------------------------------------
 # 데이터 전처리
+
+import numpy as np
+import pandas as pd
+import re
+import json
+from konlpy.tag import Okt
+from tensorflow.python.keras.preprocessing.sequence import pad_sequences
+from tensorflow.python.keras.preprocessing.text import Tokenizer
+
+dirnm = './tensorflow/'
+train_data = pd.read_csv(dirnm+'ratings_train.txt',header=0, delimiter='\t',quoting=3)
+
+# train_data['document'][:5]
+
+# 특수문자 제거
+review_text = re.sub("[^가-힣ㄱ-하-ㅣ\\s]","",train_data['document'][0])
+print(review_text)
+
+# 단어 나누기
+
+okt=Okt()
+review_text = okt.morphs(review_text, stem=True)
+print(review_text)
+
+# 불용어 사전 생성
+stop_words = set(['은','는','이','가','하','아','것','들','의','있','되','수','보','주','등','한'])
+
+clean_review = [token for token in review_text if not token in stop_words]
+clean_review
+
+
+
+
+------------------------------------------------------------------------------
+
+import numpy as np
+import pandas as pd
+import re
+import json
+from konlpy.tag import Okt
+from tensorflow.python.keras.preprocessing.sequence import pad_sequences
+from tensorflow.python.keras.preprocessing.text import Tokenizer
+
+dirnm = './tensorflow/'
+train_data = pd.read_csv(dirnm+'ratings_train.txt',header=0, delimiter='\t',quoting=3)
+
+
+def preprocessing(review, okt, remove_stopwords = False, stop_words =[]):
+    review_text = re.sub("[^가-힣ㄱ-하-ㅣ\\s]","",review)
+    word_review = okt.morphs(review_text, stem=True)
+    
+    if remove_stopwords:
+        word_review = [token for token in word_review if not token in stop_words]
+    return word_review
+
+# train_data['document'][:5]
+
+#review_text = re.sub("[^가-힣ㄱ-하-ㅣ\\s]","",train_data['document'][0])
+#print(review_text)
+
+okt=Okt()
+#review_text = okt.morphs(review_text, stem=True)
+#print(review_text)
+
+# 불용어 사전 생성
+stop_words = set(['은','는','이','가','하','아','것','들','의','있','되','수','보','주','등','한'])
+
+clean_train_review = []
+
+for review in train_data['document']:
+    if type(review) == str:
+        clean_train_review.append(preprocessing(review, okt, remove_stopwords=True, stop_words=stop_words))
+    else:
+        clean_train_review.append([])
+
+clean_train_review[:4]
+
+#clean_review = [token for token in review_text if not token in stop_words]
+#clean_review
