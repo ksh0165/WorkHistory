@@ -53,6 +53,10 @@ print(tfidf_vectorizer.transform(sentence).toarray())
 # conda search python
 # conda install python=3.6.4
 
+# conda remove wrapt
+
+# pip install tensorflow==2.0.0
+
 https://copycoding.tistory.com/227
 
 # JPype1 홈페이지 https://konlpy.org/ko/v0.5.1/install/#id2   pip3 install konlpy
