@@ -81,6 +81,30 @@ import numpy as np
 import json
 from sklearn.model_selection import train_test_split
 
+dirnm = './tensorflow/'
+input_train_data = 'train_input.npy'
+label_train_data = 'train_label.npy'
+data_configs_file='data_configs.json'
+
+input_data = np.load(open(dirnm+input_train_data,'rb'))
+label_data = np.load(open(dirnm+label_train_data,'rb'))
+prepro_configs = json.load(open(dirnm+data_configs_file, 'r'))
+
+
+# 데이터를 모델에 적용 전 학습데이터의 일부를 검증 데이터로 분리해 성능 측정
+# 학습 90% 훈련 10%
+TEST_SPLIT=0.1
+RNG_SEED = 13371447
+
+
+BATCH_SIZE = 16
+NUM_EPOCHS = 10
+vocab_size = prepro_configs['vocab_size']
+embedding_size = 128
+
+input_train, input_eval, label_train, label_eval = train_test_split(input_data,label_data, test_size=TEST_SPLIT, random_state=RNG_SEED)
+
+
 # 학습함수화 검증 함수
 def mapping_fn(X,Y):
     input, label = {'x':X}, Y
@@ -155,10 +179,6 @@ def model_fn(features, labels, mode, params):
             }
         )
 
-BATCH_SIZE = 16
-NUM_EPOCHS = 10
-#vocab_size = prepro_configs['vocab_size']
-embedding_size = 128
 
 # 에스티메이터 객체를 정의한 후, 학습
 est = tf.estimator.Estimator(model_fn, model_dir="./tensorflow/cnn_model")
@@ -177,18 +197,4 @@ print("Experiment finished at {}".format(time_end.strftime("%H:%M:%S")))
 print("")
 time_elapsed = time_end - time_start
 print("Experiment elapsed time: {} seconds".format(time_elapsed.total_seconds()))
-
-dirnm = './tensorflow/'
-input_train_data = 'train_input.npy'
-label_train_data = 'train_label.npy'
-
-input_data = np.load(open(dirnm+input_train_data,'rb'))
-label_data = np.load(open(dirnm+label_train_data,'rb'))
-
-# 데이터를 모델에 적용 전 학습데이터의 일부를 검증 데이터로 분리해 성능 측정
-# 학습 90% 훈련 10%
-TEST_SPLIT=0.1
-RNG_SEED = 13371447
-
-input_train, input_eval, label_train, label_eval = train_test_split(input_data,label_data, test_size=TEST_SPLIT, random_state=RNG_SEED)
 
