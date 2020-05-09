@@ -5,9 +5,15 @@ class CounterParent extends Component {
         super(props);
         this.state = {count:0}
     }
-    increase = () => {
+    increase = (e) => {
+        let currentCount = this.state.count;
+        if(e.shiftKey){
+            currentCount += 10;
+        } else {
+            currentCount += 1;
+        }
         this.setState({
-            count: this.state.count + 1
+            count: currentCount
         })
     }
     render() {
