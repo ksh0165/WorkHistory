@@ -3,6 +3,8 @@
 
 import matplotlib.pyplot as plt
 import glob
+from skimage.color import rgb2lab
+from skimage.transform import resize
 from collections import namedtuple
 import numpy as np
 np.random.seed(101)
@@ -39,3 +41,5 @@ print(dataset.X.shape)
 print(dataset.y.shape)
 -------------------------------------------------------------------------------------------
 'unicodeescape' codec can't decode bytes in position 2-3: truncated \UXXXXXXXX escape
+
+ImportError: cannot import name '_validate_lengths'
