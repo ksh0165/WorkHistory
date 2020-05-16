@@ -43,3 +43,4 @@ print(dataset.y.shape)
 'unicodeescape' codec can't decode bytes in position 2-3: truncated \UXXXXXXXX escape
 
 ImportError: cannot import name '_validate_lengths'
+-> pip install -U scikit-image
