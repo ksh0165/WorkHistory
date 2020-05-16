@@ -44,3 +44,4 @@ print(dataset.y.shape)
 
 ImportError: cannot import name '_validate_lengths'
 -> pip install -U scikit-image
+-> conda install -c conda-forge scikit-image
