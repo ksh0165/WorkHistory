@@ -89,3 +89,13 @@ from sklearn.tree import export_graphviz
 from IPython.display import Image
 import pydotplus
 import os
+
+
+
+from pydotplus import graph_from_dot_data
+from sklearn.tree import export_graphviz
+from IPython.display import Image
+import pydotplus
+import os
+
+os.environ['PATH'] += os.pathsep + 'C:/Program Files/Graphviz 2.44.1/bin'
