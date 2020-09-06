@@ -116,3 +116,26 @@ graph.write_png('tree1.png')
 
 dt_graph = pydotplus.graph_from_dot_data(dot_data)
 Image(dt_graph.create_png())
+
+
+
+
+scores = cross_validate(estimator=tree,
+                       X=X_train,
+                       y=y_train,
+                       scoring=['accuracy'],
+                       cv=10,
+                       n_jobs=-1,
+                       return_train_score=False)
+print('CV 정확도 점수: %s' % scores['test_accurary'])
+print('CV 정확도: %.3f +/- %.3f' % (np.mean(scores['test_accuracy']),
+                                np.std(scores['test_accuracy'])))
+                                
+                                
+                                
+                                
+pipe_tree = make_pipeline(DecisionTreeClassifier())
+pipe_tree.get_params().keys()
+
+
+
