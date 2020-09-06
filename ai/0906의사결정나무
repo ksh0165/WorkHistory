@@ -1,0 +1,76 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+import pandas as pd
+from sklearn import datasets
+
+from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import LabelEncoder
+
+from sklearn.model_selection import train_test_split
+
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import BaggingClassifier
+from sklearn.linear_model import Perceptron
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+from sklearn.neural_network import MLPClassifier
+
+from sklearn.metrics import confusion_matrix, classification_report
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, make_scorer
+from sklearn.metrics import roc_curve
+
+from sklearn.model_selection import cross_validate
+from sklearn.pipeline import make_pipeline
+from sklearn.model_selection import learning_curve, validation_curve
+from sklearn.model_selection import GridSearchCV
+
+
+bank_df = pd.read_csv('UniversalBank.csv')
+bank_df.head()
+bank_df.shape
+bank_df.keys()
+
+
+
+
+
+
+
+
+
+X = bank_df.drop(['ID','ZIP Code','Personal Loan'], axis=1)
+X.head()
+y = bank_df['Personal Loan']
+np.bincount(y)
+#class_le = LabelEncoder()
+#y = class_le.fit_transform(y)
+X_train, X_test, y_train, y_test = train_test_split(X,y,
+                                                   test_size=0.3,
+                                                   random_state=1,
+                                                   stratify=y)
+                                                   
+                                                   
+                                                   
+                                                   
+tree = DecisionTreeClassifier(criterion='gini',
+                             max_depth=None,
+                             random_state=1)
+tree.fit(X_train, y_train)
+
+
+y_pred_t = tree.predict(X_test)
+y_pred_t
+
+
+print('Classification Report')
+print(classification_report(y_test,y_pred_t))
+
+print('잘못 분류된 샘플 개수: %d' % (y_test != y_pred_t).sum())
+print('정확도: %.3f' % accuracy_score(y_test, y_pred_t))
+print('정밀도: %.3f' % precision_score(y_true=y_test, y_pred=y_pred_t))
+print('재현율: %.3f' % recall_score(y_true=y_test, y_pred = y_pred_t))
+print('F1: %.3f' % f1_score(y_true=y_test, y_pred=y_pred_t))
