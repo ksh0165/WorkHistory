@@ -98,4 +98,21 @@ from IPython.display import Image
 import pydotplus
 import os
 
-os.environ['PATH'] += os.pathsep + 'C:/Program Files/Graphviz 2.44.1/bin'
+os.environ['PATH'] += os.pathsep + 'C:/Program Files/Graphviz 2.44.1/bin/'
+
+feature_names = X.columns.tolist()
+target_name = np.array(['No','Yes'])
+
+dot_data = export_graphviz(tree,
+                          filled=True,
+                          rounded=True,
+                          class_names=target_name,
+                          feature_names=feature_names,
+                          out_file=None)
+
+
+graph = graph_from_dot_data(dot_data)
+graph.write_png('tree1.png')
+
+dt_graph = pydotplus.graph_from_dot_data(dot_data)
+Image(dt_graph.create_png())
