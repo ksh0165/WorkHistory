@@ -108,3 +108,15 @@ print('정확도: %.3f' % accuracy_score(y_test, y_pred_t))
 print('정밀도: %.3f' % precision_score(y_true=y_test, y_pred=y_pred_t))
 print('재현율: %.3f' % recall_score(y_true=y_test, y_pred = y_pred_t))
 print('F1: %.3f' % f1_score(y_true=y_test, y_pred=y_pred_t))
+
+
+fpr, tpr, thresholds = roc_curve(y_test, tree.predict_proba(X_test)[:,1])
+fpr, tpr, thresholds
+
+plt.plot(fpr, tpr, '--', label="Logictic Regression")
+plt.plot([0,1],[0,1], 'k--', label="random guess")
+plt.plot([fpr],[tpr],'r-',ms=10)
+plt.xlabel('FPR')
+plt.ylabel('TPR')
+plt.title('ROC')
+plt.show()
