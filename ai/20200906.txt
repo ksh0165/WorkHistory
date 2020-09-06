@@ -92,3 +92,19 @@ y_pred_t
 y_pred_p = tree.predict_proba(X_test)
 y_pred_p
 
+
+confmat = pd.DataFrame(confusion_matrix(y_test, y_pred_t),
+                      index=['True[0]','True[1]'],
+                      columns=['Predict[0]','Predict[1]'])
+confmat
+
+
+print('Classification Report')
+print(classification_report(y_test,y_pred_t))
+
+
+print('잘못 분류된 샘플 개수: %d' % (y_test != y_pred_t).sum())
+print('정확도: %.3f' % accuracy_score(y_test, y_pred_t))
+print('정밀도: %.3f' % precision_score(y_true=y_test, y_pred=y_pred_t))
+print('재현율: %.3f' % recall_score(y_true=y_test, y_pred = y_pred_t))
+print('F1: %.3f' % f1_score(y_true=y_test, y_pred=y_pred_t))
