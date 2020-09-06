@@ -80,3 +80,5 @@ print('F1: %.3f' % f1_score(y_true=y_test, y_pred=y_pred_t))
 pip install pydotplus
 
 
+https://www2.graphviz.org/Packages/stable/windows/10/cmake/Release/x64/
+-> graphviz-install...exe 다운로드
