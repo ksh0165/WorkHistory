@@ -1,3 +1,32 @@
+python
+
+class Cal():
+    def __init__(self, x1, x2):
+        self.x1 = x1
+        self.x2 = x2
+        
+    def add(self):
+        result = self.x1 + self.x2
+        return result
+    
+    def sub(self):
+        result = self.x1 - self.x2
+        return result
+
+cal1 = Cal(4,3)
+print(cal1.add())
+print(cal1.sub())
+
+
+import numpy as np
+num1 = [1,2,3,4]
+num2 = [5,6,7,8]
+num1 = np.array(num1)
+num2 = np.array(num2)
+num = np.array([num1,num2])
+num
+
+-----------------------------------------------------------------------------------------------------
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -28,4 +57,38 @@ from sklearn.pipeline import make_pipeline
 from sklearn.model_selection import learning_curve, validation_curve
 from sklearn.model_selection import GridSearchCV
 
+------------------------------------------------------
+
+rm_df = pd.read_csv('RidingMowers.
+
+csv')
+rm_df.head()
+rm_df.shape
+rm_df.keys()
+X = rm_df.drop(['Ownership'], axis=1)
+X.head()
+y = rm_df['Ownership']
+y.head()
+class_le = LabelEncoder()
+y = class_le.fit_transform(y)
+X_train, X_test, y_train, y_test = train_test_split(X,y,
+                                                   test_size=0.3,
+                                                   random_state=1,
+                                                   stratify=y)
+                                                   
+                                                   
+tree = DecisionTreeClassifier(criterion='gini',
+                             max_depth=1,
+                             random_state=1)
+tree.fit(X_train, y_train)
+
+------------------------------------------------------------------
+y_test
+
+
+y_pred_t = tree.predict(X_test)
+y_pred_t
+
+y_pred_p = tree.predict_proba(X_test)
+y_pred_p
 
