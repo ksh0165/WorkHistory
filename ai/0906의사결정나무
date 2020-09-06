@@ -74,3 +74,9 @@ print('정확도: %.3f' % accuracy_score(y_test, y_pred_t))
 print('정밀도: %.3f' % precision_score(y_true=y_test, y_pred=y_pred_t))
 print('재현율: %.3f' % recall_score(y_true=y_test, y_pred = y_pred_t))
 print('F1: %.3f' % f1_score(y_true=y_test, y_pred=y_pred_t))
+
+
+
+pip install pydotplus
+
+
