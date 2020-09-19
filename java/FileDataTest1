@@ -1,0 +1,37 @@
+import java.io.*;
+import java.util.*;
+public class FileDataTest {
+    public static void main(String[] args) throws Exception{
+        BufferedReader sales = new BufferedReader(new FileReader("sales.csv"));
+        HashMap<String, Integer> customer_sales = new HashMap<String,Integer>();
+        String saleinfo;
+        do{
+            saleinfo = sales.readLine();
+            if(saleinfo!=null) {
+                StringTokenizer st = new StringTokenizer(saleinfo, ",");
+                while (st.hasMoreTokens()) {
+                    String name = st.nextToken();
+                    String date = st.nextToken();
+                    String amount = st.nextToken();
+                    int sale_amount = Integer.parseInt(amount.trim());
+                    if (customer_sales.get(name) == null) {
+                        customer_sales.put(name, sale_amount);
+                    } else {
+                        customer_sales.put(name, customer_sales.get(name) + sale_amount);
+                    }
+                }
+            }
+        }while(saleinfo!=null);
+            OutputStreamWriter out = new OutputStreamWriter(
+                    new FileOutputStream("customer_sales.csv"));
+            Iterator<String> it = customer_sales.keySet().iterator();
+            while (it.hasNext()){
+                String name = it.next();
+                Integer amount = customer_sales.get(name);
+                String writeline = name+","+amount+"\r\n";
+                out.write(writeline);
+            }
+            sales.close();
+            out.close();
+    }
+}
