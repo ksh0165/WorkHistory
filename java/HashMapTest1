@@ -1,0 +1,21 @@
+import java.util.HashMap;
+import java.util.Scanner;
+public class HashMapTest {
+    public static void main(String[] args){
+        HashMap<String,String> products = new HashMap<String,String>();
+        products.put("PA01","앞치마(라운드형)A01");
+        products.put("PA02","앞치마(라운드형)A02");
+        products.put("PB01","앞치마(라운드형)B01");
+        products.put("PB02","앞치마(라운드형)B02");
+
+        Scanner s = new Scanner(System.in);
+        System.out.print("제품 코드를 입력하세요: ");
+        String code = s.next();
+        String name = products.get(code);
+        if(name==null){
+            System.out.println("미확인 제품 코드입니다. 코드를 확인하세요. ");
+        }else{
+            System.out.println(name);
+        }
+    }
+}
