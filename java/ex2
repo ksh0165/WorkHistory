@@ -1,0 +1,25 @@
+import java.util.Scanner;
+public class SurveyInput {
+    public static void main(String[] args){
+        int score[] = new int[10];
+        Scanner s = new Scanner(System.in);
+        int q,n;
+        double avg;
+        for(q=1;q<=10;q++){
+            System.out.println("질문"+q+" 점수? ");
+            n = s.nextInt();
+            if(n < 1 || n > 5){
+                System.out.println("1~5사이의 정수를 입력하세요");
+                q--;
+                continue;
+            }
+            score[q-1] = n;
+        }
+        avg = 0;
+        for(q=0;q<10;q++){
+            avg+=score[q];
+        }
+        avg/=10;
+        System.out.println("입력점수 평균은 "+avg+" 입니다.");
+    }
+}
