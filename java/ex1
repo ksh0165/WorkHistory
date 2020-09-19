@@ -1,0 +1,11 @@
+import java.util.Scanner;
+public class AddTwoNum {
+    public static void main(String[] args){
+        int x,y,z;
+        Scanner s = new Scanner(System.in);
+        x = s.nextInt();
+        y = s.nextInt();
+        z = x + y;
+        System.out.println(x+" 더하기"+y+" 은 "+z+" 입니다.");
+    }
+}
