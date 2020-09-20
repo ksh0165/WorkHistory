@@ -1,0 +1,30 @@
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import edu.uci.ics.crawler4j.crawler.Page;
+import edu.uci.ics.crawler4j.crawler.WebCrawler;
+import edu.uci.ics.crawler4j.parser.HtmlParseData;
+import edu.uci.ics.crawler4j.url.WebURL;
+import java.io.IOException;
+import org.jsoup.Connection;
+import org.jsoup.Connection.Response;
+public class Test2 {
+    public static void main(String[] args){
+    String url = "http://www.example.com";
+    Response response;
+
+    {
+        try {
+            response = Jsoup.connect(url).execute();
+            System.out.println("http 응답을 받았습니다");
+            System.out.println("문자코드는 "+response.charset()+"입니다.");
+            response.parse();
+            System.out.println("응답을 파싱했습니다");
+            System.out.println("문자코드는 "+response.charset()+" 입니다");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    }
+}
