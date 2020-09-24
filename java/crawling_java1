@@ -1,0 +1,41 @@
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import edu.uci.ics.crawler4j.crawler.Page;
+import edu.uci.ics.crawler4j.crawler.WebCrawler;
+import edu.uci.ics.crawler4j.parser.HtmlParseData;
+import edu.uci.ics.crawler4j.url.WebURL;
+import java.io.IOException;
+import org.jsoup.Connection;
+import org.jsoup.Connection.Response;
+import java.util.regex.*;
+public class Test3 {
+    private static String URL = "https://search.naver.com/search.naver?date_from=&date_option=0&date_to=&dup_remove=1&nso=&post_blogurl=&post_blogurl_without=&query=";
+    public static void main(String[] args) {
+        String KEY_WORD = "";
+        String[] PageNumber= {"1","11","21","31","41","51","61","71","81","91"};
+        try {
+            for(String NUM:PageNumber) {
+                //System.out.println(URL+getURL(KEY_WORD,NUM));
+                Document doc = Jsoup.connect(URL + getURL(KEY_WORD, NUM)).get();
+
+                Elements titles = doc.select("#sp_blog_1 > dl > dt > a");
+                //System.out.println(titles);
+                for(Element title : titles){
+                    System.out.println(title.text());
+                    //Elements content = title.select("");
+                    /*for(Element elm : content){
+                        String text = elm.text();
+                        System.out.println(text);
+                    }*/
+                }
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+    public static String getURL(String KEY_WORD, String PAGE){
+        return KEY_WORD + "&sm=tab_pge&srchby=all&st=sim&where=post&start="+PAGE;
+    }
+}
