@@ -1,0 +1,15 @@
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+
+public class Test_2 {
+    public static void main(String[] args) throws IOException {
+        int k = 0;
+        InputStream in_strm = new FileInputStream("C:\\Users\\vanguardlab\\Desktop\\adsp.txt");
+        while(in_strm.read() != -1){
+            k++;
+        }
+        System.out.println("파일크기 = "+k+"바이트");
+    }
+}
