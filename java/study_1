@@ -1,0 +1,35 @@
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+public class Test_f {
+    public static void main(String[] args){
+        try{
+            InetAddress svr = InetAddress.getLocalHost();
+            int svr_port = 5000;
+            Socket sock = new Socket(svr, svr_port);
+            BufferedWriter buff_send = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+            BufferedReader buff_recv = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+            BufferedReader buff_msg = new BufferedReader(new InputStreamReader(System.in));
+
+            while (true){
+                System.out.println("메시지 입력 : ");
+                String msg_send = buff_msg.readLine();
+                buff_send.write(msg_send,0,msg_send.length());
+                buff_send.newLine();
+                buff_send.flush();
+                System.out.println("메시지 송신 완료... 연결 TCP서버포트번호: "+svr_port);
+                String msg_recv = buff_recv.readLine();
+                System.out.println("\n 서버 응답 메시지 : "+msg_recv + "\n");
+            }
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
