@@ -1,0 +1,28 @@
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.*;
+import java.net.UnknownHostException;
+
+public class Test_f {
+    public static void main(String[] args) throws IOException {
+        int svr_port = 5000;
+        ServerSocket sock_svr = new ServerSocket(svr_port);
+        System.out.println("서버 대기 중...");
+
+        Socket sock_client = sock_svr.accept();
+
+        InputStream strm_in = sock_client.getInputStream();
+        OutputStream strm_out = sock_client.getOutputStream();
+
+        while(true){
+            int char_recv = strm_in.read();
+            System.out.println("수신 문자 ASCII 코드 : "+char_recv);
+            strm_out.write(char_recv);
+            System.out.println("수신메시지 송신 완료\n");
+        }
+    }
+}
