@@ -1,0 +1,12 @@
+public class Test_1 {
+    public static void main(String[] args){
+        Test_1 test = new Test_1();
+        Tmp t = test.new Tmp();
+        t.start();
+    }
+    class Tmp extends Thread{
+        public void run(){
+            System.out.println("start Thread");
+        }
+    }
+}
