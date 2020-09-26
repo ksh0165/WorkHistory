@@ -1,0 +1,32 @@
+import edu.uci.ics.crawler4j.fetcher.PageFetcher;
+
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.SocketException;
+
+public class Test_7 {
+    public static void main(String[] args){
+        int svr_port = 5100;
+        byte tmp_buff[] = new byte[256];
+
+        try{
+            DatagramSocket sock = new DatagramSocket(svr_port);
+            System.out.println("서버 대기 중 ... UDP 포트: " +svr_port);
+
+            while(true) {
+                DatagramPacket dgram_rx = new DatagramPacket(tmp_buff, tmp_buff.length);
+                sock.receive(dgram_rx);
+
+                System.out.println("\n 메시지 수신 완료");
+                DatagramPacket dgram_tx = new DatagramPacket(dgram_rx.getData(), dgram_rx.getLength(),dgram_rx.getAddress(),dgram_rx.getPort());
+                sock.send(dgram_tx);
+                System.out.println("\n 메시지 송신 완료");
+            }
+        }catch (SocketException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
