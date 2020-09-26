@@ -1,0 +1,15 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class Test_3 {
+    public static void main(String[] args) throws IOException {
+        String str;
+        FileReader file_in = new FileReader("C:\\Users\\vanguardlab\\Desktop\\adsp.txt");
+        BufferedReader buff = new BufferedReader(file_in);
+        while ((str = buff.readLine()) != null){
+            System.out.println(str);
+        }
+    }
+}
