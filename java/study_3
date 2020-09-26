@@ -1,0 +1,39 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.*;
+
+public class Test_6 {
+    public static void main(String[] args){
+        byte tmp_buff[] = new byte[256];
+        int svr_port = 5100;
+        try{
+            InetAddress svr = InetAddress.getByName("localhost");
+            DatagramSocket sock = new DatagramSocket();
+
+            BufferedReader buff_msg = new BufferedReader(new InputStreamReader(System.in));
+
+            while(true){
+                System.out.println("메시지 입력 : ");
+                String msg_send = buff_msg.readLine();
+                tmp_buff = msg_send.getBytes();
+
+                DatagramPacket dgram_tx = new DatagramPacket(tmp_buff, tmp_buff.length, svr, svr_port);
+                sock.send(dgram_tx);
+                System.out.println("메시지 송신 완료... UDP 서버 포트번호 : "+svr_port);
+
+                DatagramPacket dgram_rx = new DatagramPacket(tmp_buff, tmp_buff.length);
+                sock.receive(dgram_rx);
+
+                String svr_msg = new String(tmp_buff);
+                System.out.println("\n  서버 응답 메시지 : "+svr_msg);
+            }
+        }catch (UnknownHostException e) {
+            e.printStackTrace();
+        } catch (SocketException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
