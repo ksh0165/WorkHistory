@@ -17,3 +17,13 @@ def main():
 if __name__ == "__main__":
     main()
 
+--- 
+-- 1. 영진닷컴에서 load_dictionary.py를 다운받아야 한다.
+import load_dictionary
+word_list = load_dictionary.load('2of4brif.txt')
+pali_list = []
+for word in word_list:
+    if len(word) > 1 and word == word[::-1]:
+        pali_list.append(word)
+print("\nNumber of palindromes found = {}\n".format(len(pali_list)))
+print(*pali_list, sep='\n')
