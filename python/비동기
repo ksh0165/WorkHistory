@@ -44,3 +44,30 @@ def fetch_func(number):
         if response["success"]:
             print("Result is: {}".format(response["result"]))
     fut.add_done_callback(on_done_future)
+    
+    
+    ---------------------------------------
+    
+    class Timer:
+    def __init__(self, timeout):
+        self.timeout = timeout
+        self.start = time.time()
+        
+    def done(self):
+        return time.time() - self.start > self.timeout
+
+# timer = Timer(1.0)
+# while True:
+#     if timer.done():
+#         print("Timer is done!")
+#         break
+        
+    def on_timer_done(self, callback):
+        self.callback = callback
+timer = Timer(1.0)
+timer.on_timer_done(lambda: print("Timer is done!"))
+
+while True:
+    if timer.done():
+        timer.callback()
+        break
