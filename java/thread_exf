@@ -1,0 +1,68 @@
+#책소스 실습 중
+
+package Thread;
+import java.util.Random;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+public class Test3 {
+	public static void main(String[] args) {
+		RequestQueue requestQueue = new RequestQueue();
+		new ClientThread(requestQueue, "Alice",3141592L).start();
+		new ServerThread(requestQueue, "Bobby",6535897L).start();
+		}
+}
+class RequestQueue{
+	private final BlockingQueue<Request> queue = new LinkedBlockingQueue<Request>();
+	public Request getRequest() {
+		Request req = null;
+		try {
+			req = queue.take();
+		}catch(InterruptedException e) {}
+		return req;
+	}
+	public void putRequest(Request request) {
+	try {
+		queue.put(request);
+	}catch(InterruptedException e) {}
+	}
+}
+
+class ClientThread extends Thread{
+	private final Random random;
+	private final RequestQueue requestQueue;
+	public ClientThread(RequestQueue requestQueue, String name, long seed) {
+		super(name);
+		this.requestQueue = requestQueue;
+		this.random = new Random(seed);
+	}
+	public void run() {
+		for(int i = 0; i<10000;i++) {
+			Request request = new Request("No."+i);
+			System.out.println(Thread.currentThread().getName()+" request "+request);
+			requestQueue.putRequest(request);
+			try {
+				Thread.sleep(random.nextInt(1000));
+			}catch(InterruptedException e) {}
+		}
+	}
+}
+
+class ServerThread extends Thread {
+	private final Random random;
+	private final RequestQueue requestQueue;
+	public ServerThread(RequestQueue requestQueue, String name, long seed) {
+		super(name);
+		this.requestQueue = requestQueue;
+		this.random = new Random(seed);
+	}
+	public void run() {
+		for(int i = 0; i<10000; i++) {
+			Request request = requestQueue.getRequest();
+			System.out.println(Thread.currentThread().getName()+" handled "+request);
+			try {
+				Thread.sleep(random.nextInt(1000));
+			}catch(InterruptedException e) {}
+			
+		}
+	}
+}
