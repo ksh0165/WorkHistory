@@ -1,0 +1,36 @@
+package Thread;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+public class serialization {
+
+	public static void main(String[] args) throws IOException, ClassNotFoundException {
+		FileOutputStream fos = new FileOutputStream("weather_file");
+		ObjectOutputStream oos = new ObjectOutputStream(fos);
+		WeatherMessage wm = new WeatherMessage(20,30,10);
+		oos.writeObject(wm);
+		oos.close();
+		FileInputStream fis = new FileInputStream("weather_file");
+		ObjectInputStream ois = new ObjectInputStream(fis);
+		WeatherMessage wm2 = (WeatherMessage)ois.readObject();
+		System.out.println("온도 :"+wm2.temp+", 풍속:"+wm2.wind+", 강우량:"+wm2.rain);
+		ois.close();
+	}
+}
+class WeatherMessage implements Serializable
+{
+	int temp;
+	int wind;
+	int rain;
+	WeatherMessage(int temp, int wind, int rain)
+	{
+		this.temp = temp;
+		this.wind = wind;
+		this.rain = rain;
+	}
+}
