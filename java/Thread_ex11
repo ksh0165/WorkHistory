@@ -1,0 +1,46 @@
+# 책 실습
+
+package Thread;
+
+public class Test10 {
+	public static void main(String[] args) {
+		ThreadSub sub = new ThreadSub();
+		Thread thread = new Thread(sub);
+		thread.start();
+	}
+}
+
+class ThreadSub implements Runnable{
+	int i = 0;
+	public void run() {
+		while(i++ < 20) {
+			System.out.println("쓰레드 실행중 "+ i);
+		}
+	}
+}
+
+--------------------------------------------------------
+
+package Thread;
+
+public class Test10 {
+	public static void main(String[] args) {
+		ThreadSub sub = new ThreadSub();
+		Thread thread1 = new Thread(sub);
+		Thread thread2 = new Thread(sub);
+		thread1.start();
+		thread2.start();
+	}
+}
+
+class ThreadSub implements Runnable{
+	int i = 0;
+	public void run() {
+		while(i++ < 20) {
+			System.out.println("쓰레드 실행중 "+ i);
+		}
+	}
+}
+
+
+
