@@ -1,0 +1,23 @@
+package Thread;
+import java.io.*;
+public class File2 {
+	public static void main(String[] args)
+	{
+		String str;
+		try {
+			InputStreamReader isr = new InputStreamReader(System.in);
+			BufferedReader br = new BufferedReader(isr);
+			while(true)
+			{
+				try {
+					str = br.readLine();
+					if(str == null)
+					{
+						break;
+					}
+					System.out.println("입력 문자열 = "+str);
+				}catch(Exception e) {e.printStackTrace();}
+			}
+		}catch(Exception e) {e.printStackTrace();}
+	}
+}
