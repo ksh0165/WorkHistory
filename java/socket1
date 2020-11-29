@@ -1,0 +1,49 @@
+public class server {
+
+	public static void main(String[] args) {
+		ServerSocket ss;
+		int port = 1111;
+		Socket so;
+		String line;
+			try
+			{
+				ss = new ServerSocket(port);
+				so = ss.accept();
+				InputStream is = so.getInputStream();
+				BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+				while((line = reader.readLine()) != null) {
+					System.out.println("수신자료 :"+line);
+				}
+				
+				reader.close();
+				
+				so.close();
+				ss.close();
+			}catch(Exception e) {}		
+	}
+}
+
+
+public class client {
+	public static void main(String[] args)
+	{
+		String server = "127.0.0.1";
+		int port = 1111;
+		Socket so;
+		String realStr = "This is Good Coin";
+		String message;
+		try
+		{
+			so = new Socket(server,port);
+			OutputStream os = so.getOutputStream();
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os));
+			bw.write(realStr);
+			bw.newLine();
+			bw.flush();
+			
+			so.close();
+			bw.close();
+		}catch(Exception e) {}	
+	}
+}
+
