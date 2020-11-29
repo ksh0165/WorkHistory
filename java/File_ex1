@@ -1,0 +1,20 @@
+package Thread;
+import java.io.*;
+public class File1 {
+	public static void main(String[] args) throws IOException
+	{
+		FileWriter fw = new FileWriter("test_file");
+		for(int x = 1; x <= 10; x++)
+		{
+			fw.write(x+"번째 줄입니다.");
+		}
+		fw.close();
+		FileReader fr = new FileReader("test_file");
+		int ch;
+		while((ch = fr.read()) != -1)
+		{
+			System.out.println((char) ch);
+		}
+		fr.close();
+	}
+}
