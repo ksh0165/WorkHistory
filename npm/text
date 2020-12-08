@@ -1,0 +1,4 @@
+nvm install 8.10.0
+npm install -g yarn
+npx create-react-app my-app
+yarn start
