@@ -1,0 +1,28 @@
+package ArrayList;
+import java.util.ArrayList;
+import java.util.List;
+public class Test1 {
+	public static void main(String[] args)
+	{
+		List<String> ls = new ArrayList<>();
+		String[] weekDays = {"sun","mon","tue","wed","thu","fri","sat"};
+		for(String weekDay : weekDays)
+		{
+			ls.add(weekDay);
+		}
+		dump("ls:",ls);
+		ls.set(ls.indexOf("wed"), "Wednesday");
+		dump("ls:",ls);
+		ls.remove(ls.lastIndexOf("fri"));
+		dump("ls:",ls);
+	}
+	static void dump(String title, List<String> ls)
+	{
+		System.out.println(title+" ");
+		for(String s : ls)
+		{
+			System.out.println(s+" ");
+		}
+		System.out.println();
+	}
+}
