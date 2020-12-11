@@ -1,0 +1,145 @@
+[서버]
+package socket;
+import java.net.*;
+import java.io.*;
+import java.util.*;
+
+public class TcpServer {
+	private ServerSocket server;
+	Vector sManager = new Vector();
+	Random md = new Random();
+	public TcpServer() {}
+	void StartServer() {
+		try {
+			server = new ServerSocket(7777);
+			System.out.println("서버 소켓이 생성되었습니다.");
+			while(true) {
+				Socket socket = server.accept();
+				System.out.println("클라이언트와 연결되었습니다.");
+				new KBBCom_thread(socket).start();
+				sManager.add(socket);
+				System.out.println("현재 클라이언트 수:"+sManager.size());
+			}
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+	}
+	public static void main(String[] args) {
+		TcpServer ts = new TcpServer();
+		ts.StartServer();
+
+	}
+	class KBBCom_thread extends Thread{
+		Socket socket;
+		private BufferedReader reader;
+		private BufferedWriter writer;
+		KBBCom_thread(Socket socket){
+			this.socket = socket;
+		}
+		public void run() {
+			try {
+				reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+				String msg;
+				while((msg=reader.readLine())!=null) {
+					System.out.println("msg:"+msg);
+					if(msg.equals("OK")) {
+						writer.write(md.nextInt(3));
+						writer.newLine();
+						writer.flush();
+						System.out.println("서버의 결과값을 전송합니다.");
+					}
+				}
+			}catch(Exception e) {}
+			finally {
+				sManager.remove(socket);
+				if(reader!=null)
+					try {
+						reader.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				if(writer!=null)
+					try {
+						writer.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				if(socket!=null)
+					try {
+						socket.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				reader=null;writer=null;socket=null;
+				System.out.println("클라이언트가 떠났습니다.");
+				System.out.println("현재 클라이언트 수:"+sManager.size());
+			}
+		}
+	}
+}
+
+[클라이언트]
+package socket;
+import java.net.*;
+import java.io.*;
+import java.util.*;
+
+public class TcpClient {
+	public static int KAWI=0;
+	public static int BAWI=1;
+	public static int BO=2;
+	static BufferedReader reader;
+	static BufferedWriter writer;
+	Socket socket;
+	BufferedReader tmpVal = null;
+	private static int selectValue = -1;
+	public TcpClient() {}
+	private void connect() {
+		try {
+			socket = new Socket("127.0.0.1",7777);
+			System.out.println("가위,바위,보 게임을 시작합니다.");
+			reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+			tmpVal = new BufferedReader(new InputStreamReader(System.in));
+			selectValue = Integer.parseInt(tmpVal.toString());
+			actionValue();
+		}catch(Exception e) {
+			System.out.println("서버와 연결이 실패하였습니다.");
+		}
+	}
+	public static void actionValue() {
+		int player=-1; int server=-1;
+		if(selectValue==-1) return;
+		else if(selectValue==0) player=KAWI;
+		else if(selectValue==1) player=BAWI;
+		else if(selectValue==2) player=BO;
+		try {
+			System.out.println("서버로 OK문자를 보냅니다.");
+			writer.write("OK");
+			writer.newLine();
+			writer.flush();
+			server = Integer.parseInt(reader.readLine());
+		}catch(IOException ie) {
+			if(player==server) System.out.println("당신은 비겼습니다.");
+			else if(player > server || server-player==2) System.out.println("당신은 졌습니다.");
+			else System.out.println("당신은 이겼습니다.");
+		}
+	}
+	public static void main(String[] args) {
+		
+		Scanner sc = new Scanner(System.in);
+		System.out.println("0~2 사이의 숫자를 입력해주세요.");
+		selectValue = sc.nextInt();
+		System.out.println("클라이언트 선택:"+ selectValue);
+		if(selectValue < 0 || selectValue > 2) {
+			System.out.println("잘못된 값을 입력하였습니다. 가위,바위,보 게임을 종료합니다.");
+			return;
+		}
+		TcpClient tc = new TcpClient();
+		tc.connect();
+	}
+}
