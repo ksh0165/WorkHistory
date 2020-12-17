@@ -4,3 +4,23 @@ pip install django==2.1
 python -m pip install --upgrade pip
 django-admin startproject pyweb
 python manage.py runserver
+
+https://visualstudio.microsoft.com/ko/vs/older-downloads/
+재배포 가능 패키지 및 빌드 도구 > Microsoft visual c++ 2-15 재배포 가능 패키지 업데이트 3
+pip install psycopg2
+
+======================================================================================
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'xxx',
+        'HOST': 'localhost',
+        'POST': '5432',
+    }
+}
+======================================================================================
+
+python manage.py migrate
+
