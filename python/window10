@@ -24,3 +24,38 @@ DATABASES = {
 
 python manage.py migrate
 
+======================================================================================
+postgresql db 테이블 생성
+
+
+create sequence table_name_id_seq;
+
+create table board_categories (
+id integer not null default nextval('table_name_id_seq'),
+category_code varchar(100) not null,
+category_type varchar(100) not null,
+category_name varchar(100) not null,
+category_desc varchar(200) not null,
+list_count integer default 20,
+authority int default 0,
+creation_date timestamp default current_timestamp,
+last_update_date timestamp,
+primary key(id)
+)
+
+
+create table boards (
+id integer not null default nextval('table_name_id_seq'),
+category_id integer not null,
+user_id integer not null,
+title varchar(300) not null,
+content text not null,
+registered_date timestamp default current_timestamp,
+last_update_date timestamp default null,
+view_count integer default 0,
+image varchar(255) default null,
+primary key(id),
+foreign key(user_id) references board_categories(id),
+foreign key(category_id) references auth_user(id)
+)
+==========================================================================================
