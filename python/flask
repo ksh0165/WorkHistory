@@ -29,3 +29,25 @@ if __name__ == '__main__':
     FlaskApp.run()
 
 ---------------------------------------------------------------------------
+from flask import Flask
+FlaskApp = Flask(__name__)
+
+
+@FlaskApp.route("/")
+def HelloFlask():
+    return 'HelloFlask'
+
+
+@FlaskApp.route("/helloK/")
+def helloK():
+    return 'HelloK!'
+
+
+@FlaskApp.route('/login/<ID>')
+def login_id(ID):
+    return 'Login ID: %s' % ID
+
+
+if __name__ == '__main__':
+    FlaskApp.debug = True
+    FlaskApp.run()
