@@ -1,0 +1,36 @@
+#Json 설정 파일 읽기
+import json
+from pprint import pprint
+
+with open('JsonConfig.json', encoding='utf-8') as Json_file:
+    Json_data = json.loads(Json_file.read())
+print(Json_data)
+pprint(Json_data)
+Json_file.close()
+
+SRV_HOST_IP = Json_data['HOST_IP']
+SRV_HOST_PORT = Json_data['HOST_PORT']
+LOG_LEVEL = Json_data['LOG_LEVEL']
+SRV_ADMIN = Json_data['SRV_ADMIN']
+SRV_EMAIL = Json_data['SRV_EMAIL']
+
+print(SRV_HOST_IP)
+print(SRV_HOST_PORT)
+print(LOG_LEVEL)
+print(SRV_ADMIN)
+print(SRV_EMAIL)
+
+if __name__ == '__main__':
+    print('ConfigModule1 is running')
+else:
+    print('ConfigModule1 is imported')
+    
+    ----------------------------------------------------------
+    
+    {
+"HOST_IP": "127.0.0.1",
+"HOST_PORT": 1004,
+"LOG_LEVEL": "DEBUG",
+"SRV_ADMIN": "Klasse Code",
+"SRV_EMAIL": "KlasseCode@gmail.com"
+}
