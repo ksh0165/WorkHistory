@@ -5,5 +5,27 @@ python -m pip install --upgrade pip
 pip install flask
 
 visual code 설치
+python 유틸 설치 
+인터프리터 : 아나콘다 python.exe 선택
 
+HelloFlask.py 생성 후 실행 , 웹에서 확인 하기 
 ----------------------------------------------------------------
+from flask import Flask
+FlaskApp = Flask(__name__)
+
+
+@FlaskApp.route("/")
+def HelloFlask():
+    return 'HelloFlask'
+
+
+@FlaskApp.route("/helloK/")
+def helloK():
+    return 'HelloK!'
+
+
+if __name__ == '__main__':
+    FlaskApp.debug = True
+    FlaskApp.run()
+
+---------------------------------------------------------------------------
