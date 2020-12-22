@@ -1,0 +1,31 @@
+#Ini 설정 파일 읽기
+import configparser
+
+config = configparser.ConfigParser()
+config.read('IniConfig.ini')
+SRV_ADMIN = config.get('ADMIN','SRV_ADMIN')
+SRV_EMAIL = config.get('ADMIN','SRV_EMAIL')
+SRV_HOST_IP = config.get('SERVER','HOST_IP')
+SRV_HOST_PORT = config.get('SERVER','HOST_PORT')
+LOG_LEVEL = config.get('SERVER','LOG_LEVEL')
+
+print(SRV_ADMIN)
+print(SRV_EMAIL)
+print(SRV_HOST_IP)
+print(SRV_HOST_PORT)
+print(LOG_LEVEL)
+
+if __name__ == '__main__':
+    print('ConfigModule sample2 is running')
+else:
+    print('ConfigModule sample2 is imported')
+    
+---------------------------------------------------------------
+
+[ADMIN]
+SRV_ADMIN=Klasse Code
+SRV_EMAIL=KlasseCode@gmail.com
+[SERVER]
+HOST_IP=127.0.0.1
+HOST_PORT=1004
+LOG_LEVEL=DEBUG
