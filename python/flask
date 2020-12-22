@@ -1,0 +1,9 @@
+python -m venv pyweb
+pyweb\Scripts\activate.bat
+python -m pip install --upgrade pip
+
+pip install flask
+
+visual code 설치
+
+----------------------------------------------------------------
