@@ -1,0 +1,40 @@
+from flask import Flask, render_template
+FlaskApp = Flask(__name__)
+
+
+@FlaskApp.route("/")
+def HelloFlask():
+    return 'HelloFlask'
+
+
+@FlaskApp.route("/helloK/")
+def helloK():
+    return 'HelloK!'
+
+
+@FlaskApp.route('/login/<ID>')
+def login_id(ID):
+    return 'Login ID: %s' % ID
+
+@FlaskApp.route('/user/<username>')
+def user(username):
+    return render_template('UserInfo1.html',name=username)
+
+
+
+if __name__ == '__main__':
+    FlaskApp.debug = True
+    FlaskApp.run()
+-------------------------------------------------------------------------
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>사용자 정보</title>
+    </head>
+    <body>
+        <H1>HELLO, {{name}}</H1>
+    </body>
+</html>
+
