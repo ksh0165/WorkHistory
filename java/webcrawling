@@ -1,0 +1,22 @@
+import urllib.request
+target_url = "http://www.python.org"
+url_request = urllib.request
+
+web_page = url_request.urlopen(target_url)
+print(web_page.read())
+
+
+------------------------
+https://www.selenium.dev/downloads/
+download 진행 
+
+pip install selenium
+
+https://sites.google.com/a/chromium.org/chromedriver/home 
+------------------------------------------------------------------------
+from selenium import webdriver
+
+driver = webdriver.Chrome('d:/py2/py2/Scripts/chromedriver.exe')
+
+------------------------------------------------------------------------
+
