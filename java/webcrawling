@@ -19,4 +19,5 @@ from selenium import webdriver
 driver = webdriver.Chrome('d:/py2/py2/Scripts/chromedriver.exe')
 
 ------------------------------------------------------------------------
+실행 : & d:/py2/py2/Scripts/python.exe d:/py2/py2/WebCrawl_urllib.py
 
