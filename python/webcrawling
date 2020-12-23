@@ -13,6 +13,7 @@ download 진행
 pip install selenium
 
 https://sites.google.com/a/chromium.org/chromedriver/home 
+1
 ------------------------------------------------------------------------
 from selenium import webdriver
 
@@ -21,3 +22,116 @@ driver = webdriver.Chrome('d:/py2/py2/Scripts/chromedriver.exe')
 ------------------------------------------------------------------------
 실행 : & d:/py2/py2/Scripts/python.exe d:/py2/py2/WebCrawl_urllib.py
 
+2.
+================================================================================================
+from selenium import webdriver
+
+driver = webdriver.Chrome('d:/py2/py2/Scripts/chromedriver.exe')
+
+target_url = "http://www.python.org"
+
+driver.get(target_url)
+================================================================================================
+
+3.
+================================================================================================
+from selenium import webdriver
+
+driver = webdriver.Chrome('d:/py2/py2/Scripts/chromedriver.exe')
+
+target_url = "http://www.google.com"
+
+driver.get(target_url)
+
+search_box = driver.find_element_by_name('q')
+
+search_box.send_keys('Python')
+
+search_box.submit()
+
+driver.close()
+================================================================================================
+
+4.
+================================================================================================
+from selenium import webdriver
+
+driver = webdriver.Chrome('d:/py2/py2/Scripts/chromedriver.exe')
+
+target_url = "http://www.naver.com"
+
+driver.get(target_url)
+
+driver.find_element_by_name('query').send_keys('Python')
+
+driver.find_element_by_name('query').submit()
+
+driver.close()
+================================================================================================
+
+5.
+================================================================================================
+
+from selenium import webdriver
+
+driver = webdriver.Chrome('d:/py2/py2/Scripts/chromedriver.exe')
+
+target_url = "https://nid.naver.com/nidlogin.login"
+
+driver.get(target_url)
+
+driver.find_element_by_name('id').send_keys('id')
+
+driver.find_element_by_name('pw').send_keys('pw')
+
+driver.find_element_by_class_name('btn_global').click()
+
+
+================================================================================================
+
+pip install bs4
+6.
+================================================================================================
+from bs4 import BeautifulSoup
+from selenium import webdriver
+
+driver = webdriver.Chrome('d:/py2/py2/Scripts/chromedriver.exe')
+
+target_url = "https://music.naver.com/"
+
+driver.get(target_url)
+
+web_page = driver.page_source
+print(web_page)
+
+bs_soup = BeautifulSoup(web_page,'html.parser')
+print(bs_soup)
+
+
+================================================================================================
+
+
+7.
+================================================================================================
+from bs4 import BeautifulSoup
+from selenium import webdriver
+
+driver = webdriver.Chrome('d:/py2/py2/Scripts/chromedriver.exe')
+
+target_url = "https://music.naver.com/"
+
+driver.get(target_url)
+
+web_page = driver.page_source
+print(web_page)
+
+bs_soup = BeautifulSoup(web_page,'html.parser')
+
+music_list = bs_soup.findAll('td',attrs={'class':'album'})
+for music in music_list:
+    print(music.a.text)
+
+music_artist = bs_soup.findAll('td',attrs={'class':'_artist artist'})
+for artist in music_artist:
+    print(artist.a.text)
+================================================================================================
