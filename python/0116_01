@@ -1,0 +1,30 @@
+import requests
+from bs4 import BeautifulSoup
+ 
+def convert_to_code(company_code, maxpage):
+    for page in maxpage:
+        url = 'https://finance.naver.com/item/main.nhn?code=' + company_code + "&page=" + page
+        result = requests.get(url)
+        bs_obj = BeautifulSoup(result.content, 'html.parser')
+ 
+        no_today = bs_obj.find('p', {'class': 'no_today'}) # 태그 p, 속성값 no_today 찾기
+        blind = no_today.find('span', {'class': 'blind'}) # 태그 span, 속성값 blind 찾기
+
+        now_price = blind.text
+
+def main():
+    info_main_a = input("="*50+"\n"+"실시간 뉴스기사 다운받기."+"\n" +
+                        "시작하시려면 Enter를 눌러주세요."+"\n"+"="*50+"\n")
+    company = input("종목 이름이나 코드 입력:")
+    maxpage = input("최대 뉴스 페이지 수 입력:")
+    pattern = '[0-9a-zA-Z가-힣]+'
+    print(now_price)
+    if bool(re.match(pattern, company)) == True:
+#        company_code = dict_result.get(str(company))
+        convert_to_code(company, maxpage)
+    else:
+        print('재시작하시요.')
+    
+main()
+
+#https://jeongwookie.github.io/2019/03/18/190318-naver-finance-data-crawling-using-python/ 출처
