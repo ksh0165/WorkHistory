@@ -1,0 +1,40 @@
+import requests
+from bs4 import BeautifulSoup
+import re
+
+list = []
+def convert_to_code(company_code, maxpage):
+    for page in maxpage:
+        url = 'https://finance.naver.com/item/main.nhn?code=' + company_code + "&page=" + page
+        result = requests.get(url)
+        bs_obj = BeautifulSoup(result.content, 'html.parser')
+        title = ['하락:','퍼센트:']
+        cnt = 2
+        no_today = bs_obj.find('p', {'class': 'no_today'}) # 태그 p, 속성값 no_today 찾기
+        no_exday = bs_obj.find('p', {'class': 'no_exday'})
+        blind1 = no_today.find('span', {'class': 'blind'}) # 태그 span, 속성값 blind 찾기
+        blind2 = no_exday.find_all('em')
+        
+        for idx,arg in enumerate(blind2):
+            print(idx)
+            print('1:',arg.text)
+            print('2:',re.findall('[\d.]+',arg.text)[0])
+            list.append(title[idx]+re.findall('[\d.]+',arg.text)[0])
+            
+        list.append('가격:'+blind1.text)
+        print(list)
+
+def main():
+    info_main_a = input("="*50+"\n"+"실시간 뉴스기사 다운받기."+"\n" +
+                        "시작하시려면 Enter를 눌러주세요."+"\n"+"="*50+"\n")
+    company = input("종목 이름이나 코드 입력:")
+    maxpage = input("최대 뉴스 페이지 수 입력:")
+    pattern = '[0-9a-zA-Z가-힣]+'
+    if bool(re.match(pattern, company)) == True:
+        convert_to_code(company, maxpage)
+    else:
+        print('재시작하시요.')
+    
+main()
+
+
