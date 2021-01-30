@@ -1,0 +1,7 @@
+# 생활코딩 수업 따라해보기
+https://www.tensorflow.org/js/models?hl=ko
+
+https://github.com/tensorflow/tfjs-models/tree/master/mobilenet
+MobileNet 소스 복사
+
+node js를 이용하여 MobileNet 소스 실행해보기
