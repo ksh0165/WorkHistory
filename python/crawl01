@@ -1,0 +1,35 @@
+import requests
+from bs4 import BeautifulSoup
+
+def get_bs_obj():
+    url = "https://finance.naver.com/item/main.nhn?code=005610"
+    result = requests.get(url)
+    bs_obj = BeautifulSoup(result.content, "html.parser")
+    return bs_obj
+
+bs_obj = get_bs_obj()
+no_today = bs_obj.find("p",{"class":"no_today"})
+blind_now = no_today.find("span",{"class":"blind"})
+print(blind_now.text)
+
+#https://www.youtube.com/watch?v=R2bOl3iRUYc
+
+
+
+import requests
+from bs4 import BeautifulSoup
+
+def get_bs_obj():
+    url = "https://finance.naver.com/item/main.nhn?code=005610"
+    result = requests.get(url)
+    bs_obj = BeautifulSoup(result.content, "html.parser")
+    return bs_obj
+
+def get_price(bs_obj):
+    no_today = bs_obj.find("p",{"class":"no_today"})
+    blind_now = no_today.find("span",{"class":"blind"})
+    return blind_now.text    
+        
+bs_obj = get_bs_obj()
+price = get_price(bs_obj)
+print(price)
