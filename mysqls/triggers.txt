@@ -106,4 +106,28 @@ after insert on AAAAA for each ROW
            NEW.INDEX_YN,
            NEW.SYSTEM_NAME,
            NEW.CREATOR);
+	   
+	   
+create procedure dataBulkInsert()
+BEGIN
 
+	DECLARE i INT DEFAULT 1;
+	WHILE (i <= 100) DO
+	INSERT INTO AAAAA VALUE(i,CONCAT('의류','_',i),'kjs','kjs01','kjs01','ksh0100','1','안녕하세요. 구매희망','신상','N','N',sysdate(),'kjs','김재성',sysdate(),'kjs','이름',sysdate(),'kjs','A','1','1','N',sysdate(),CONCAT('/home/user/goods/hot/items/','_',sysdate()),'1',sysdate(),'N','kjs','kjs');
+	SET i = i + 1;
+	END WHILE;
+END
+call dataBulkInsert();
+
+
+create procedure dataBulkUpdate()
+BEGIN
+
+	DECLARE i INT DEFAULT 1;
+	WHILE (i <= 100) DO
+	UPDATE kjs 
+            SET CONTENT = CONCAT('안녕하세요.','_',i*2);
+	SET i = i + 1;
+	END WHILE;
+END
+call dataBulkUpdate();
