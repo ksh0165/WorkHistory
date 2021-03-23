@@ -130,4 +130,29 @@ BEGIN
 	SET i = i + 1;
 	END WHILE;
 END
+
+
+create procedure dataBulkUpdate()
+BEGIN
+
+	DECLARE i INT DEFAULT 1;
+	WHILE (i <= 100) DO
+	UPDATE AAAAA
+            SET TITLE = CONCAT('안녕하세요. 환불','_',i*2),
+                 FILEPATH = CONCAT('/home/AAA/goods/hot/item/','_',sysdate());
+	SET i = i + 1;
+	END WHILE;
+END
+call dataBulkUpdate();
+
+
+
+CREATE TRIGGER syncB
+BEFORE UPDATE ON AAAAA
+FOR EACH ROW 
+BEGIN 
+  UPDATE BBBBB
+    SET TITLE = new.TITLE,
+         FILEPATH = new.FILEPATH         ;
+END
 call dataBulkUpdate();
