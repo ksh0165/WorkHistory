@@ -1,0 +1,35 @@
+import xlwt
+
+cnt = 0;
+row = 10;
+col = 0;
+with open("C:\\test1.txt", "r", encoding='UTF8') as file:
+    content = list()
+
+    while True:
+        sentence = file.readline()
+        cnt = sentence.count("\n")+1;
+        word = sentence.split(',')
+        if sentence:
+            content.append(word)
+        else:
+            break
+    print(content)
+
+
+wb=xlwt.Workbook(encoding='utf-8')
+ws=wb.add_sheet('foam')
+
+for txt in range(len(content)):
+    for num in [0,1,2,3,4,5,6,7,8,9,10]:
+        ws.write(row,num,content[txt][col])
+        col = col + 1
+
+wb.save('subway2.xls');
+
+
+
+
+
+
+
