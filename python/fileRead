@@ -1,0 +1,10 @@
+with open("C:\\test1.txt", "r", encoding='UTF8') as file:
+    content = list()
+    while True:
+        sentence = file.readline()
+
+        if sentence:
+            content.append(sentence)
+        else:
+            break
+    print(content)
