@@ -36,7 +36,7 @@ wb.save('subway2.xls');
 from openpyxl import load_workbook
 col = 1;      // 기입 시작 열번호
 rowCnt = 10;  // 기입 시작 행번호
-book = load_workbook('subway.xlsx') // 읽어올 엑셀
+book = load_workbook('C:\\subway.xlsx') // 읽어올 엑셀
 sheet = book['foam']                // 읽어올 시트명
 with open("C:\\test1.txt", "r", encoding='UTF8', newline='\r\n') as file:  // 읽을 문자열 텍스트 파일
     content = list()
@@ -55,4 +55,11 @@ for i in content:                                                          // �
     for j in i:
         sheet.cell(row=rowCnt, column=col).value = j
         col = col + 1
-book.save('subway2.xlsx');                                                // 엑셀로 저장
+book.save('C:\\kjs\\subway2.xlsx');                                               // 엑셀로 저장
+
+
+----------------------------------------------------------------------------------------
+
+.bat 파일
+
+C:\kjs\pythonWorksplace\venv\Scripts\python.exe C:/kjs/pythonWorksplace/subway.py
