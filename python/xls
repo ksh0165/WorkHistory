@@ -28,11 +28,31 @@ for i in content:
 
 wb.save('subway2.xls');
 
+-------------------------------------------------------------------------------------
+# text -> xlsx로 쓰기
+# C:\test1.txt -> C:\kjs\pythonWorksplace\subway.xlsx, subway2.xlsx
 
 
+from openpyxl import load_workbook
+col = 1;      // 기입 시작 열번호
+rowCnt = 10;  // 기입 시작 행번호
+book = load_workbook('subway.xlsx') // 읽어올 엑셀
+sheet = book['foam']                // 읽어올 시트명
+with open("C:\\test1.txt", "r", encoding='UTF8', newline='\r\n') as file:  // 읽을 문자열 텍스트 파일
+    content = list()
 
-
-
-
-
-
+    while True:
+        sentence = file.readline()
+        word = sentence.split(',')
+        if sentence:
+            content.append(word)
+        else:
+            break
+    print(content)
+for i in content:                                                          // 엑셀에 데이터 쓰기
+    rowCnt = rowCnt + 1
+    col = 1
+    for j in i:
+        sheet.cell(row=rowCnt, column=col).value = j
+        col = col + 1
+book.save('subway2.xlsx');                                                // 엑셀로 저장
