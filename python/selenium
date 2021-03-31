@@ -1,0 +1,13 @@
+from selenium import webdriver
+
+chromedriver = 'C:\kjs\chromedriver.exe'
+driver = webdriver.Chrome(chromedriver)
+
+driver.get('')
+driver.find_element_by_id('UserName').send_keys('kjs0165')
+driver.find_element_by_id('Password').send_keys('')
+driver.find_element_by_xpath('').click()
+
+#https://sites.google.com/a/chromium.org/chromedriver/downloads // 맞는 드라이버 다운로드 받기
+
+# pip install selenium
