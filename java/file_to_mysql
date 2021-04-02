@@ -23,7 +23,7 @@ public class fileToDb {
 			String sql = "load data local infile '"+ path +
 					"' INTO TABLE subway "+
 					" CHARACTER SET utf8 "+
-					"FIELDS TERMINATED BY '|' "+
+					"FIELDS TERMINATED BY ',' "+
 					"LINES TERMINATED BY '\r\n'";
 			boolean result = stmt.execute(sql);
 		}catch(Exception e) {	
