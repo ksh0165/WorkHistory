@@ -1,0 +1,48 @@
+package h3;
+import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+public class fileToDb {
+	static String url ="jdbc:mysql://ip:port/kjh?characterEncoding=utf8&amp;useUnicode=true";
+	static String id = "id";
+	static String pw = "1234";
+	static String driver = "com.mysql.jdbc.Driver";
+	protected Connection conn;
+	
+	public static void LoadDataInfileExcute() throws Exception{
+		Connection conn = null;
+		Statement stmt = null;
+		Class.forName(driver);
+		int cnt = 0;
+		try {
+			conn = DriverManager.getConnection(url, id, pw);
+			stmt = conn.createStatement();
+			String path = "C:/test1.txt";
+			File f = new File(path);
+			String sql = "load data local infile '"+ path +
+					"' INTO TABLE subway "+
+					" CHARACTER SET utf8 "+
+					"FIELDS TERMINATED BY '|' "+
+					"LINES TERMINATED BY '\r\n'";
+			boolean result = stmt.execute(sql);
+		}catch(Exception e) {	
+			System.out.println("e: "+e);
+		}finally {
+			conn.close();
+			stmt.close();
+		}
+	}
+	
+	public static void main(String[] args) {
+		try {
+			LoadDataInfileExcute();
+		}catch(Exception e) {
+			System.out.println("me: "+e);
+		}
+	}
+}
+-------------------------------------------------
+
+시도중 : 윈도우 
+mysql-connector-java-5.1.31.jar
