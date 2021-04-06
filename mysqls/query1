@@ -1,1 +1,2 @@
-select max(cnt) from (select DATE_FORMAT(REPORTED_TIME,'%Y%m%d') as date ,count(*) as cnt from IR_KJH_ERROR_LOG where REPORTED_TIME like '2021-03%' group by DATE_FORMAT(REPORTED_TIME,'%Y%m%d')) as result;
+select max(cnt) from (select DATE_FORMAT(REPORTED_TIME,'%Y%m%d') as date ,count(*) as cnt from 테이블명 where REPORTED_TIME like '2021-03%' group by DATE_FORMAT(REPORTED_TIME,'%Y%m%d')) as result;
+# 출처 : https://galid1.tistory.com/567
