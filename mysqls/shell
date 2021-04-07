@@ -1,0 +1,33 @@
+user=test04
+dbuser=kjh
+dbname=kjh
+homedir=/home/test04
+dbpwd=`cat $homedir/.a.property`
+IRtable=네이밍규칙
+day=`date -d '1 month ago' | sed -e 's/ //g' | awk -F "." '{print $1"-"$2"%"}'`
+echo "============================VERSION=========================================="
+IR4_HOME=$homedir
+VERSION=`cat $IR4_HOME/VERSION.info`
+echo $VERSION
+echo "===========================JAVA_PID==================================================="
+JAVA_PID=`ps -ef | grep java | grep $user | awk '{print "JAVA PID: "$2}'`
+echo $JAVA_PID
+echo "===========================DISK MAX USED PERCENT %===================================="
+echo "DISK USED %"
+DISK_USED=`df -h "${homedir}" | awk 'NR==3 {print "used size:" $2,"used persent:" $4}'`
+echo "$DISK_USED"
+echo "===========================MEMORY & CPU MAX USED PERCENT %============================"
+query1="select CONCAT('MEMORY MAX USED: ', MEMORY_USED_BY_IR,'MB') from ${IRtable}_SERVER_LOG  where REGISTERED like '"${day}"' ORDER BY MEMORY_USED_BY_IR desc limit 1;"
+mysql -u "${dbuser}" -p"${dbpwd}" -D "${dbname}" -e "${query1}"
+
+query2="select CONCAT('CPU MAX USED : ', CPU_USAGE_BY_IR/100,'%') from ${IRtable}_SERVER_LOG  where REGISTERED like '"${day}"' ORDER BY CPU_USAGE_BY_IR desc limit 1;"
+mysql -u "${dbuser}" -p"${dbpwd}" -D "${dbname}" -e "${query2}"
+echo "===========================INDEX ERROR COUNT==========================================="
+query3="select max(cnt) from (select DATE_FORMAT(REPORTED_TIME,'%Y%m%d') as date ,count(*) as cnt from ${IRtable}_ERROR_LOG where REPORTED_TIME like '"${day}"' group by DATE_FORMAT(REPORTED_TIME,'%Y%m%d')) as result;"
+mysql -u "${dbuser}" -p"${dbpwd}" -D "${dbname}" -e "${query3}"
+echo "===========================MAX COUNNT==========================================="
+query4="select max(cnt) from (select DATE_FORMAT(REGISTERED,'%Y%m%d') as date,SUM(REQUESTED) as cnt from ${IRtable}_QUERY_LOG_STATS where REGISTERED like '"${day}"' group by DATE_FORMAT(REGISTERED,'%Y%m%d')) as result;"
+mysql -u "${dbuser}" -p"${dbpwd}" -D "${dbname}" -e "${query4}"
+echo "===========================ALL SIZE KB==========================================="
+TOTALSIZE=`du -sk $IR4_HOME/index| awk '{total+=$1} END {print total"KB"}'`
+echo $TOTALSIZE
