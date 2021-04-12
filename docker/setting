@@ -19,3 +19,5 @@ flush privileges;
 create user 'admin'@'%' identified by '1234';
 
 grant all privileges on *.* to 'admin'@'%';
+
+docker run -it --privileged -p 3306:3306 mysql:latest
