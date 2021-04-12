@@ -21,3 +21,8 @@ create user 'admin'@'%' identified by '1234';
 grant all privileges on *.* to 'admin'@'%';
 
 docker run -it --privileged -p 3306:3306 mysql:latest 
+docker pull oracleinanutshell/oracle-xe-11g
+docker network ls
+docker network inspect e01a1c7b8cfd
+
+docker run -it --ip 172.17.0.100 -p 1521:1521 oracleinanutshell/oracle-xe-11g
