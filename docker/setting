@@ -1,1 +1,4 @@
 https://docs.microsoft.com/ko-kr/windows/wsl/install-win10#step-4---download-the-linux-kernel-update-package
+
+
+docker run --name some-mysql -p3306:3306  -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql
