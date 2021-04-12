@@ -10,3 +10,7 @@ docker exec -it id /bin/bash
 apt-get update
 
 apt-get install vim
+
+alter user 'root'@'localhost' identified with mysql_native_password by '1234';
+
+flush privileges;
