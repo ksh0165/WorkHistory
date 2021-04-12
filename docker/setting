@@ -6,3 +6,7 @@ docker run --name some-mysql -p3306:3306  -e MYSQL_ROOT_PASSWORD=my-secret-pw -d
 apt-get update && apt-get install procps
 
 docker exec -it id /bin/bash
+
+apt-get update
+
+apt-get install vim
