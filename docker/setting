@@ -14,3 +14,8 @@ apt-get install vim
 alter user 'root'@'localhost' identified with mysql_native_password by '1234';
 
 flush privileges;
+
+
+create user 'admin'@'%' identified by '1234';
+
+grant all privileges on *.* to 'admin'@'%';
