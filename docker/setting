@@ -28,3 +28,9 @@ docker network inspect e01a1c7b8cfd
 docker run -it --ip 172.17.0.100 -p 1521:1521 oracleinanutshell/oracle-xe-11g
 
 >docker run -itd --privileged -p 22:22 -p 1521:1521 -p 8080:8080 oracleinanutshell/oracle-xe-11g
+
+
+docker run -itd --privileged --ip 172.18.0.5 --network internet -p 8090:8080 -p 221:21 -p223:23 -p 5555:5555 -p 50001:5001 -p 5556:5556 -p 5557:5557 -p 5558:5558 -p 5559:5559 centos
+
+docker network create --gateway 172.18.0.1 --subnet 172.18.0.0/21 internet
+
