@@ -1,0 +1,5 @@
+conn sys/oracle@XE as sysdba
+
+grant sysdba to system;
+
+update sys.props$ set value$='KO16MSWIN949' where name ='NLS_CHARACTERSET';
