@@ -34,3 +34,11 @@ docker run -itd --privileged --ip 172.18.0.5 --network internet -p 8090:8080 -p 
 
 docker network create --gateway 172.18.0.1 --subnet 172.18.0.0/21 internet
 
+/etc/yum.repos.d/MariaDB.repo
+[mariadb]
+name = MariaDB
+baseurl = http://yum.mariadb.org/10.4/centos7-amd64
+gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+gpgcheck=1
+curl -sS https://downloads.mariadb.com/MariaDB/mariadb_repo_setup | sh
+ yum install MariaDB
