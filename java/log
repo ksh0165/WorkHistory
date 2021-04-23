@@ -1,0 +1,4 @@
+import java.util.logging.*;
+
+static Logger logger = Logger.getLogger(SampleExtension.class.getName());
+logger.log(Level.INFO,"getIndexOf in name: "+name+" columnValue : "+columnValue);
