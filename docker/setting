@@ -43,3 +43,5 @@ gpgcheck=1
 curl -sS https://downloads.mariadb.com/MariaDB/mariadb_repo_setup | sh
  yum install MariaDB
 docker run -itd --privileged --ip 172.18.0.6 --network internet -p 3306:3306 -p 22221:21 -p 22222:22 -p22223:23 –v /sys/fs/cgroup:/sys/fs/cgroup:ro ansible/centos7-ansible /usr/sbin/init
+
+docker commit 0a3f3745594a 이름
