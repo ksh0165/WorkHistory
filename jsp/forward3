@@ -1,0 +1,42 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.net.URLEncoder" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<%
+	String cnt = "asia";
+	String nation = URLEncoder.encode("대한민국","UTF-8");
+	
+	response.sendRedirect(request.getContextPath() + "/forward3_a.jsp?cnt="+cnt+"&nation="+nation);
+%>
+
+</body>
+</html>
+
+
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<%
+	String cnt = request.getParameter("cnt");
+	String nation = request.getParameter("nation");
+	out.println("대륙이름 : "+cnt+"<br>");
+	out.println("국가이름 : "+nation);
+%>
+
+</body>
+</html>
