@@ -25,3 +25,7 @@ if match:
         print("Good one.")
     elif at_name.lower() in my_names:
         print("Hi {}, How are you?".format(greeter_name))
+
+
+from collections import Counter
+Counter("Guten Morgen Rosa".split())
