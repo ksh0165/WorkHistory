@@ -1,0 +1,29 @@
+import PropTypes from 'prop-types';
+import React, {useState} from 'react';
+function TodaysPlan(props){
+	const [ State, setState ] = useState({
+		loading: true,
+		formData: 'no data',
+	});
+	console.log(State);
+	setTimeout(() => {handleData()},3000);
+	const handleData = () =>{
+		const data = 'new data';
+		setState({
+			loading: false,
+			formData: data + State.formData,
+		});
+	}
+	return (
+		<div>
+		<span>로딩중: {State.loading}</span>
+		결과: {State.formData}
+		</div>
+	);
+}
+
+TodaysPlan.propTypes = {
+	name: PropTypes.string,
+};
+
+export default TodaysPlan;
