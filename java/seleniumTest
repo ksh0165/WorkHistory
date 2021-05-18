@@ -2,3 +2,46 @@ http://selenium-release.storage.googleapis.com/index.html?path=2.48/ (x)
 https://www.selenium.dev/downloads/
 https://chromedriver.storage.googleapis.com/index.html?path=91.0.4472.19/
 selenium-server-standalone-3.13.0.jar
+
+
+
+
+
+libary import 하기
+
+[SeleniumTest]
+package spider;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+public class SeleniumTest {
+	public static void main(String[] args) {
+		SeleniumTest st = new SeleniumTest();
+		st.crawl();
+	}
+	private WebDriver driver;
+	public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
+	public static final String WEB_DRIVER_PATH = "C:\\kjs\\workspace\\spider\\chromedriver.exe";
+	
+	private String base_url;
+	
+	public SeleniumTest() {
+		super();
+		System.setProperty(WEB_DRIVER_ID,WEB_DRIVER_PATH);
+		driver = new ChromeDriver();
+		base_url = "https://www.naver.com";
+	}
+	
+	public void crawl() {
+		try {
+			driver.get(base_url);
+			System.out.println(driver.getPageSource());
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			driver.close();
+		}
+	}
+}
+
+
+# https://gdtbgl93.tistory.com/154
