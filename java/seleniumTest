@@ -44,4 +44,72 @@ public class SeleniumTest {
 }
 
 
+----------------------------------------------------------------------------------------------------------------------------
+package spider;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+public class SeleniumTest2 {
+	public static void main(String[] args) {
+		SeleniumTest2 st2 = new SeleniumTest2();
+		st2.crawl();
+	}
+	private WebDriver driver;
+	private WebElement webElement;
+	
+	public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
+	public static final String WEB_DRIVER_PATH = "C:\\kjs\\workspace\\spider\\chromedriver.exe";
+	
+	private String base_url;
+	
+	public SeleniumTest2() {
+		super();
+		System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
+		
+		ChromeOptions options = new ChromeOptions();
+		options.setCapability("ignoreProtectedModeSettings",true);
+		driver = new ChromeDriver(options);
+		
+		base_url = "https://daum.net";
+	}
+	
+	public void crawl() {
+		try {
+			driver.get(base_url);
+
+			driver.findElement(By.className("link_login")).click();
+
+			webElement = driver.findElement(By.id("id"));
+			String daum_id = "ksh0165";
+			webElement.sendKeys(daum_id);
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			webElement = driver.findElement(By.id("inputPwd"));
+			String daum_pw = "";
+			webElement.sendKeys(daum_pw);
+			
+			webElement = driver.findElement(By.id("loginBtn"));
+			webElement.submit();
+			
+			Thread.sleep(20000);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+//			driver.close();
+		}
+	}
+}
+
+---------------------------------------------------------------------------------------------------------------------------
 # https://gdtbgl93.tistory.com/154
