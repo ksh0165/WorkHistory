@@ -5,3 +5,87 @@ https://jsoup.org/download
 
 # 참고 : https://derveljunit.tistory.com/253
 
+
+package spider;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+public class SeleniumTest3 {
+	public static String getCurrentData() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+		return sdf.format(new Date());
+	}
+
+	public static void main(String[] args) throws ClientProtocolException, IOException{
+		System.out.println("Start Date : "+ getCurrentData());
+		String url = "http://finance.naver.com/item/coinfo.nhn?code=045510&target=finsum_more";
+		StringBuffer sb = new StringBuffer();
+		Connection conn = Jsoup.connect(url);
+		Document html = conn.get();
+		
+		Elements prices = html.getElementsByClass("rate_info");
+
+		for(Element price : prices) {
+			Elements priceInfo = price.getElementsByClass("today");
+			for(Element pNums : priceInfo) {
+				Elements pTexts = pNums.getElementsByClass("no_today");
+				for(Element pText : pTexts) {
+					Elements pNum = pText.select(".no_down span");
+					for(Element p : pNum) {
+						sb.append(p.getElementsByClass("blind").text());
+					}
+				}
+			}
+		}
+		sb.append("\n");
+		
+		for(Element price2 : prices) {
+			Elements priceInfo = price2.getElementsByClass("no_info");
+			for(Element pNums : priceInfo) {
+				Elements pTexts = pNums.getElementsByTag("tbody");
+				for(Element pText : pTexts) {
+					Elements pNum = pText.getElementsByTag("tr");
+					for(Element p : pNum) {
+						Elements result = p.getElementsByTag("td").select("span");
+						for(Element resultText : result) {
+							//System.out.println(resultText.text());
+							//System.out.println(resultText.select(".sptxt").toString());
+							String texts = resultText.text();
+							//System.out.println(texts);
+							if(texts.length() > 2){
+								if(!texts.matches(".*[가-힣]+.*")) {
+									sb.append(texts+"\n");	
+								}
+							} else {
+								continue;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		System.out.println(sb.toString());				
+		System.out.println("End Date : "+getCurrentData());
+	}
+}
+
