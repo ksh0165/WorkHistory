@@ -1,0 +1,56 @@
+package spider;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.JavascriptExecutor;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+public class SeleniumTest2 {
+	public static void main(String[] args) {
+		ChromeOptions options = new ChromeOptions();
+		options.setCapability("ignoreProtectedModeSettings",true);
+		final String WEB_DRIVER_ID = "webdriver.chrome.driver";
+		final String WEB_DRIVER_PATH = "C:\\kjs\\workspace\\spider\\chromedriver.exe";
+		System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
+		WebDriver driver = new ChromeDriver(options);
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		WebElement element = null;
+		try {			
+			String base_url = "https://nowonbun.tistory.com";
+			driver.get(base_url);
+			driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+			
+			element = driver.findElement(By.xpath("//*[@id=\"leftside\"]/div[2]/ul/li/ul/li[2]/ul/li[5]/a"));
+			js.executeScript("arguments[0].click();", element);
+			
+
+			while(true) {
+				try {
+					element = driver.findElement(By.cssSelector("[href^='/350']"));
+					js.executeScript("arguments[0].click();", element);
+					break;
+				}catch(Throwable e) {
+					element = driver.findElement(By.cssSelector(".paging li.active"));
+					js.executeScript("arguments[0].click();", element);
+				}
+			}
+			element = driver.findElement(By.xpath("//*[@id='content']/article/div"));
+			System.out.println(element.getAttribute("value"));
+			
+			List<WebElement> elements = driver.findElements(By.cssSelector(".article p"));
+			for(WebElement ele : elements) {
+				System.out.println(ele.getText());
+			}
+		}catch(Throwable e) {
+			e.printStackTrace();
+		}finally {
+			
+		}
+	}
+}
+	
+	
+
+#https://nowonbun.tistory.com/42 
