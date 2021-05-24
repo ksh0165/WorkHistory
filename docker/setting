@@ -54,3 +54,4 @@ yum install openssh-server openssh-clients openssh-askpass
 
 yum -y install tofrodos
 
+ yum install dos2unix
