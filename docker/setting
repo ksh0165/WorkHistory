@@ -55,3 +55,5 @@ yum install openssh-server openssh-clients openssh-askpass
 yum -y install tofrodos
 
  yum install dos2unix
+
+docker run -itd --privileged --ip 172.18.0.7 --network internet -p 13306:3306 -p 231:21 -p 232:22 -p233:23 -p 8050:8080 --user=root -e MYSQL_ROOT_PASSWORD=my-secret-pw  –v /sys/fs/cgroup:/sys/fs/cgroup:ro cytopia/mysql-5.5 /usr/sbin/init
