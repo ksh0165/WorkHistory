@@ -48,3 +48,6 @@ docker commit 0a3f3745594a 이름
 
 docker tool-box : default 192.168.99.100 -> port forwarding : 222 
 - ssh 99.100 222 - ftp 
+
+
+yum install openssh-server openssh-clients openssh-askpass
