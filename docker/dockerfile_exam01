@@ -1,0 +1,35 @@
+FROM php:7.0-apache
+RUN apt-get update && apt-get install -y \
+&& apt-get install -y libmcrypt-dev mysql-client \
+&& apt-get install -y zip unzip git vim
+RUN docker-php-ext-install pdo_mysql session json mbstring
+COPY php/ /var/www/html/
+
+----------------------------------------------------------
+
+<html>
+<head><title>PHP CONNECTION TEST</title></head>
+<body>
+<?php
+$servername = "mysql";
+$database = "mysql";
+$username = getenv('MYSQL_USER');
+$password = getenv('MYSQL_PASSWORD');
+try{
+        $dsn = "mysql:host=$servername;dbname=$database";
+        $conn = new PDO($dsn, $username, $password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        print("<p> connect sueccess!</p>");
+}  catch(PDOException $e){
+        print("<p>connect fail</p>");
+        echo $e->getMessage();
+}
+$conn = null;
+print('<p> exit program</p>');
+?>
+</body>
+</html>
+
+-------------------------------------------------------
+
+docker build -t php-apl:0.1
