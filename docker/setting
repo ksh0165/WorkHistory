@@ -61,3 +61,5 @@ docker run -itd --privileged --ip 172.18.0.7 --network internet -p 13306:3306 -p
 CREATE DATABASE test CHARACTER SET UTF8;
 
 GRANT ALL PRIVILEGES ON test .* TO 'root'@'%' IDENTIFIED BY '1234';
+
+https://github.com/kubernetes/minikube/releases
