@@ -1,0 +1,46 @@
+import java.io.*;
+
+import java.net.*;
+
+public class Test2 {
+
+	public static void main(String[] args) throws MalformedURLException, IOException {
+		
+	    URLConnection conn = new URL("https://media.w3.org/2010/07/bunny/04-Death_Becomes_Fur.mp4").openConnection();
+	    InputStream is = null;
+		try {
+			is = conn.getInputStream();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+	    OutputStream outstream = null;
+		try {
+			outstream = new FileOutputStream(new File("C:\\temp\\test1.mp4"));
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	    byte[] buffer = new byte[4096];
+	    int len;
+	    try {
+			while ((len = is.read(buffer)) > 0) {
+			    outstream.write(buffer, 0, len);
+			}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	    try {
+			outstream.close();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+}
+
+
+# https://media.w3.org/2010/07/bunny/04-Death_Becomes_Fur.mp4
+# https://stackoverflow.com/questions/3653842/how-to-use-java-to-download-a-mp3-file-online
