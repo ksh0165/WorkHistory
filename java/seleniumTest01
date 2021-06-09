@@ -1,0 +1,57 @@
+package spider;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.By;
+public class SeleniumTest6 {
+	public static void main(String[] args){
+        Path path = Paths.get("C:\\kjs\\workspace\\spider\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver",path.toString());
+
+        WebDriver driver = new ChromeDriver();
+        JavascriptExecutor js = (JavascriptExecutor)driver;
+        js.executeScript("window.open('about:blank','_blank');");
+        List<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+        
+        driver.switchTo().window(tabs.get(0));
+
+        driver.get("https://heodolf.tistory.com/101");
+
+        WebElement page1_title = driver.findElement(By.xpath("//*[@id=\"content\"]/div[1]/div[1]/div/h1"));
+        if(page1_title != null){
+            System.out.println(page1_title.getText());
+        }
+        driver.close();
+
+        driver.switchTo().window(tabs.get(1));
+
+        driver.get("https://heodolf.tistory.com/102");
+        WebElement page2_title = driver.findElement(By.xpath("//*[@id=\"content\"]/div[1]/div[1]/div/h1"));
+        if(page1_title!=null){
+            System.out.println(page2_title.getText());
+        }
+        driver.close();
+
+        try{
+            Thread.sleep(5000);
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }finally{
+            driver.quit();
+        }
+    }
+}
+
+# https://heodolf.tistory.com/103?category=887835
+# 라이브러리 
+client-combined-3.141.59.jar
+guava-25.0-jre.jar
+jsoup-1.11.3.jar
+okhttp-3.11.0.jar
+okio-1.14.0.jar
