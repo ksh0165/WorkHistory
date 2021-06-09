@@ -55,3 +55,5 @@ guava-25.0-jre.jar
 jsoup-1.11.3.jar
 okhttp-3.11.0.jar
 okio-1.14.0.jar
+
+참고 SETX CLASSPATH "%CLASSPATH%;C:\temp\okio-1.14.0.jar;C:\temp\jsoup-1.11.3.jar;C:\temp\client-combined-3.141.59.jar;C:\temp\guava-25.0-jre.jar;C:\temp\okhttp-3.11.0.jar;"
