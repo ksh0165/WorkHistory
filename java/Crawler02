@@ -1,0 +1,42 @@
+import java.io.IOException;
+import org.jsoup.*;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+public class Crawler {
+    public static void main(String args[]){
+        try{
+            String URL = "https://heodolf.tistory.com/18";
+
+            Connection conn = Jsoup.connect(URL);
+
+            Document html = conn.get();
+
+            System.out.println("[Attribute]");
+            Elements fileblocks = html.getElementsByClass("fileblock");
+            for(Element fileblock : fileblocks){
+                Elements files = fileblock.getElementsByTag("a");
+                for(Element elm : files){
+                    String text = elm.text();
+                    String href = elm.attr("href");
+
+                    System.out.println( text +" > "+href);
+                }
+            }
+
+            System.out.println("\n[Css Selector]");
+            Elements files = html.select(".fileblock a");
+            for(Element elm : files){
+                String text = elm.text();
+                String href = elm.attr("href");
+
+                System.out.println( text + " > "+href);
+            }
+
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+}
+
