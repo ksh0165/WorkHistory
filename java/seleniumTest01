@@ -57,3 +57,191 @@ okhttp-3.11.0.jar
 okio-1.14.0.jar
 
 참고 SETX CLASSPATH "%CLASSPATH%;C:\temp\okio-1.14.0.jar;C:\temp\jsoup-1.11.3.jar;C:\temp\client-combined-3.141.59.jar;C:\temp\guava-25.0-jre.jar;C:\temp\okhttp-3.11.0.jar;"
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+import java.io.IOException;
+import org.jsoup.*;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
+import java.util.HashMap;
+import org.jsoup.Connection;
+import org.jsoup.Connection.Response;
+import org.jsoup.Jsoup;
+import org.openqa.selenium.By;
+public class Crawler {
+    public static void main(String args[]){
+        try{
+            run("https://heodolf.tistory.com/18");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void run(String URL) throws Exception{
+        Properties options = new Properties();
+        options.put("Content-Type","application/html;charset=UTF-8");
+        options.put("downloads","C:/temp/");
+        options.put("timeout",30*1000);
+        
+        //Crawler crawler = new Crawler();
+        Consts consts = new Consts(URL,options);
+        Document html = consts.get();
+        Elements files = html.select(".fileblock a");
+
+        List<Map<String,String>> download_list = new ArrayList<Map<String,String>>();
+        Map<String,String> download_info = null;
+        for(Element file : files){
+            download_info = new HashMap<String, String>();
+            String href = file.attr("href");
+            String filename = file.text();
+            if(filename!=null){
+                filename = filename.split(" ")[0];
+            }
+            download_info.put("filename",filename);
+            download_info.put("URL",href);
+            download_list.add(download_info);   
+        }
+        consts.downloads(download_list);
+    }
+}
+
+class A {
+    public final static int DEFAULT_THREADS = 2;
+    public final static String DEFAULT_DOWNLOADS = "C:/temp/";
+    public final static String DEFAULT_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.116 Safari/537.36";
+    public final static String DEFAULT_CONTENT_TYPE = "application/json;charset=UTF-8"; 
+    public final static int DEFAULT_TIMEOUT = 5*1000;
+}
+
+class Consts {
+    A a = new A();
+    private static ExecutorService executorService = null;
+    private static Connection conn = null;
+    private static Properties options = null;
+
+    public Consts(){
+        executorService = Executors.newFixedThreadPool(a.DEFAULT_THREADS); 
+    }
+    public Consts(String URL){
+        executorService = Executors.newFixedThreadPool(a.DEFAULT_THREADS);
+        conn = Jsoup.connect(URL);
+    }
+    public Consts(String URL, Properties options) throws Exception {
+        executorService = Executors.newFixedThreadPool(a.DEFAULT_THREADS);
+        conn = Jsoup.connect(URL);
+        setOptions(options);
+    }
+
+    public void setOptions(Properties _options) throws Exception{
+        options = _options;
+
+        final String downloads = options.getProperty("downloads", a.DEFAULT_DOWNLOADS);
+        File file = new File(downloads);
+        if(!file.exists() || !file.isDirectory()){
+            file.mkdirs();
+        }
+        if(conn==null) return;
+
+        if(_options.get("headers")!=null){
+            conn.headers((Map<String,String>)_options.get("headers"));
+        }
+        conn.header("Content-Type", (String)_options.getProperty("Content-Type", a.DEFAULT_CONTENT_TYPE));
+        conn.userAgent((String)_options.getProperty("User-Agent",a.DEFAULT_USER_AGENT));
+        int timeout = a.DEFAULT_TIMEOUT;
+        if(_options.get("timeout") != null){
+            timeout = (Integer) _options.get("timeout");
+        }
+        conn.timeout(timeout);
+    }
+
+    public Document get() throws IOException{
+        return conn.get();
+    }
+
+    public Document get(Map<String,String> data) throws IOException {
+        return conn.data(data).get();
+    }
+
+    public Document post() throws IOException {
+        return conn.post();
+    }
+
+    public Document post(Map<String,String> data) throws IOException{
+        return conn.data(data).post();
+    }
+
+    public Runnable download(final String URL, final String filename){
+        Runnable runnable = new Runnable(){
+            public void run(){
+                String downloads = options.getProperty("downloads",a.DEFAULT_DOWNLOADS);
+                String threadName = Thread.currentThread().getName();
+
+                Connection conn = Jsoup.connect(URL).ignoreContentType(true);
+
+                File saveFile = null;
+
+                FileOutputStream out = null;
+
+                try{
+                    System.out.println("["+threadName+"][START] "+URL);
+                    Response response = conn.execute();
+
+                    String contentType = response.contentType();
+                    System.out.println("["+threadName+"][Content-Type] "+contentType);
+                    saveFile = new File(downloads,filename);
+
+                    out = new FileOutputStream(saveFile);
+                    out.write(response.bodyAsBytes());
+                    out.close();
+                }catch(IOException e){
+                    e.printStackTrace();
+                }finally{
+                    if(saveFile.exists()){
+                        System.out.println("["+threadName+"][SAVED] "+saveFile.getPath());
+                    }else{
+                        System.out.println("["+threadName+"][SAVE FAILED"+saveFile.getPath());
+                    }
+                }
+            }
+        };
+        executorService.execute(runnable);
+        return runnable;
+    }
+    public void downloads(List<Map<String,String>> download_list){
+        for(Map<String,String>download_info : download_list){
+            String URL = download_info.get("URL");
+            String filename = download_info.get("filename");
+
+            download(URL,filename);
+        }
+        executorService.shutdown();
+        try{
+            if(!executorService.awaitTermination(5, TimeUnit.MINUTES)){
+                executorService.shutdownNow();
+            }
+            executorService = null;
+        }catch(Exception e){
+            executorService.shutdownNow();
+            executorService = null;
+        }finally{
+            if(executorService != null){
+                executorService.shutdownNow();
+            }
+        }
+    }
+}
+
