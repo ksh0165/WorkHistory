@@ -1,0 +1,47 @@
+package spider;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+public class SeleniumTest7 {
+	private String url = null;
+	private WebDriver driver = null;
+	private WebElement element = null;
+	private Path path = Paths.get("C:\\kjs\\workspace\\spider\\chromedriver.exe");
+	public SeleniumTest7(){
+		System.setProperty("webdriver.chrome.driver",path.toString());
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--disable-popup-blocking");
+        driver = new ChromeDriver(options);
+        url = "https://www.melon.com/chart/index.htm";
+	}
+	
+	public void activeBot() {
+		try {
+			driver.get(url);
+			Thread.sleep(2000);
+			element = driver.findElement(By.xpath("/html/body/div/div[3]/div/div/div[3]/form/div/table/tbody/tr[1]/td[2]/div/a"));
+			String title = element.getAttribute("title");
+			
+			element = driver.findElement(By.xpath("/html/body/div/div[3]/div/div/div[3]/form/div/table/tbody/tr[1]/td[6]/div/button"));
+			String cntLike = element.getText();
+			
+			System.out.println("1위 노래는 ["+title+"] 입니다.");
+			System.out.println("좋아요 수는 ["+cntLike+"] 입니다.");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			driver.close();
+		}
+	}
+	public static void main(String[] args) {
+		SeleniumTest7 s7 = new SeleniumTest7();
+		s7.activeBot();
+	}
+}
