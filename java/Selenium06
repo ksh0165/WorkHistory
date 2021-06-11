@@ -1,0 +1,30 @@
+package spider;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+public class SeleniumTest10 {
+	private String url = null;
+	private WebDriver driver = null;
+	private WebElement element = null;
+	private static Path path = Paths.get("C:\\kjs\\workspace\\spider\\chromedriver.exe");
+	public static void main(String[] args) {
+		System.setProperty("webdriver.chrome.driver",path.toString());
+		String baseURL = "http://demo.guru99.com/test/newtours/register.php";
+		WebDriver driver = new ChromeDriver();
+		driver.get(baseURL);
+		String url = driver.getCurrentUrl();
+		System.out.println("currentURL: "+ url);
+
+		WebElement el = driver.findElement(By.cssSelector("body > div:nth-child(5) > table > tbody > tr > td:nth-child(2) > table > tbody > tr:nth-child(4) > td > table > tbody > tr > td:nth-child(2) > table > tbody > tr:nth-child(5) > td > form > table > tbody > tr:nth-child(17) > td > input[type=submit]"));
+		el.click();
+	}
+}
+
+
+------------------------------------------------------------------
+
+https://soraji.github.io/java/2020/08/03/javaseleniumcssselector/
