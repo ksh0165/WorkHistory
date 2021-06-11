@@ -31,3 +31,75 @@ public class SeleniumTest11 {
 }
 
 ------------- # https://ryangx2.tistory.com/45
+
+
+package spider;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class SeleniumTest11 {
+	private String url = null;
+	private WebDriver driver = null;
+	private WebElement element = null;
+	private static Path path = Paths.get("C:\\kjs\\workspace\\spider\\chromedriver.exe");
+	public static void main(String[] args) {
+		System.setProperty("webdriver.chrome.driver",path.toString());
+		String baseURL = "http://comic.naver.com/comment/comment.nhn?titleId=641253&no=299";
+		WebDriver driver = new ChromeDriver();
+		
+		try {
+			driver.get(baseURL);
+			System.out.println(driver.getPageSource());
+			List<WebElement> element =driver.findElements(By.className("u_cbox_contents"));
+			System.out.println("베스트 댓글");
+			for(WebElement el : element) {
+				System.out.println(el.getText());
+			}
+			
+			List<WebElement> Btns = driver.findElements(By.className("u_cbox_sort_label"));
+			Btns.get(1).click();
+			Thread.sleep(2000);
+			System.out.println("일반 댓글");
+			element = driver.findElements(By.className("u_cbox_contents"));
+			for(WebElement el : element) {
+				System.out.println(el.getText());
+			}
+			
+			int i = 4;
+			while(true) {
+				try {
+					WebElement Nextpage = driver.findElement(
+						By.cssSelector("div.u_cbox_paginate > div > a:nth-child("+ i +") > span")
+					);
+					Nextpage.click();
+					Thread.sleep(2000);
+					element = driver.findElements(By.className("u_cbox_contents"));
+					for(WebElement el:element) {
+						System.out.println(el.getText());
+					}
+					if(i<=12) {
+						i++;
+					}else {
+						i=4;
+					}
+				}catch(Exception e) {
+					System.out.println("프로그램을 종료합니다.");
+					break;
+				}
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+}
+
+------------------------------------------------------------------------------------------------------------------------------
+
+
