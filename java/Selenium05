@@ -1,0 +1,34 @@
+package spider;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import org.openqa.selenium.By;
+public class SeleniumTest9 {
+	private String url = null;
+	private WebDriver driver = null;
+	private WebElement element = null;
+	private static Path path = Paths.get("C:\\kjs\\workspace\\spider\\chromedriver.exe");
+	public static void main(String[] args) {
+		System.setProperty("webdriver.chrome.driver",path.toString());
+		String baseURL = "http://demo.guru99.com/test/newtours/register.php";
+		WebDriver driver = new ChromeDriver();
+		driver.get(baseURL);
+	
+		Select drpCountry = new Select(driver.findElement(By.name("country")));
+		drpCountry.selectByVisibleText("ANTARCTICA");
+		
+		driver.get("http://jsbin.com/osebed/2");
+		Select fruits = new Select(driver.findElement(By.id("fruits")));
+		//fruits.selectByVisibleText("Banana");
+		fruits.selectByIndex(1);
+	}
+}
+
+-------------------------------------------
+
+#https://testmanager.tistory.com/117?category=555058
