@@ -1,0 +1,33 @@
+package spider;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class SeleniumTest11 {
+	private String url = null;
+	private WebDriver driver = null;
+	private WebElement element = null;
+	private static Path path = Paths.get("C:\\kjs\\workspace\\spider\\chromedriver.exe");
+	public static void main(String[] args) {
+		System.setProperty("webdriver.chrome.driver",path.toString());
+		String baseURL = "http://www.google.com";
+		WebDriver driver = new ChromeDriver();
+		
+		try {
+			driver.get(baseURL);
+			System.out.println(driver.getPageSource());
+			WebElement webElement = driver.findElement(By.name("q"));
+			webElement.sendKeys("날씨");
+			webElement.submit();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+}
+
+------------- # https://ryangx2.tistory.com/45
