@@ -1,0 +1,48 @@
+package spider;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class SeleniumTest12 {
+	private String url = null;
+	private WebDriver driver = null;
+	private WebElement element = null;
+	private static Path path = Paths.get("C:\\kjs\\workspace\\spider\\chromedriver.exe");
+	public static void main(String[] args) {
+
+		try {
+			System.setProperty("webdriver.chrome.driver",path.toString());
+			String baseURL = "https://map.naver.com/";
+			WebDriver driver = new ChromeDriver();
+			driver.get(baseURL);
+			Thread.sleep(2000);
+			WebElement search = driver.findElement(By.cssSelector("#container > shrinkable-layout > div > app-base > search-input-box > div > div > div"));
+			WebElement searchWord = search.findElement(By.tagName("input"));
+			searchWord.sendKeys("서울 맛집");
+			searchWord.sendKeys(Keys.ENTER);
+			Thread.sleep(5000);
+			List<WebElement> el1 = driver.findElements(By.className("_3Yilt"));
+			
+			for(int i=0; i < el1.size(); i++) {
+				if(el1.get(i).getText().equals("명동교자 본점")) {
+					el1.get(i).click();
+					break;
+				}
+			}
+			String html = driver.getPageSource();
+			System.out.println("문자열 : "+html);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}
+
+# https://devsnote.com/asks/381
