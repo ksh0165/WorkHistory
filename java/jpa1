@@ -1,0 +1,35 @@
+[Memo.java]
+
+package com.example.test.entity;
+
+import lombok.*;
+import javax.persistence.*;
+@Entity
+@Table(name="tbl_memo")
+@ToString
+@Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class Memo {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long mno;
+	@Column(length=200,nullable=false)
+	private String memoText;
+}
+
+
+[build.gradle]
+implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.7.0'  #Mariadb
+
+[application.properties] # table 생성
+server.port = 8070
+spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
+spring.datasource.url=jdbc:mariadb://127.0.0.1:3306/test
+spring.datasource.username=root
+spring.datasource.password=1111
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.show-sql=true
