@@ -1,0 +1,117 @@
+[application.properties]
+
+server.port = 8070
+spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
+spring.datasource.url=jdbc:mariadb://127.0.0.1:3306/test
+spring.datasource.username=root
+spring.datasource.password=1111
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.show-sql=true
+
+
+[build.gradle]
+
+plugins {
+	id 'org.springframework.boot' version '2.5.2'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'war'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	annotationProcessor 'org.projectlombok:lombok'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.7.0'
+}
+
+test {
+	useJUnitPlatform()
+}
+
+
+
+[MemoRepository]
+
+package com.example.test.repository;
+import  org.springframework.data.jpa.repository.JpaRepository;
+import com.example.test.entity.Memo;
+public interface MemoRepository extends JpaRepository<Memo,Long>{
+
+}
+
+[Memo]
+
+package com.example.test.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.ToString;
+import lombok.NoArgsConstructor;
+import lombok.Getter;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name="tbl_memo")
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Builder
+public class Memo {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long mno;
+	
+	@Column(length=200,nullable=false)
+	private String memoText;
+}
+
+
+[MemoRepositoryTest]
+
+package com.example.test;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import com.example.test.entity.Memo;
+import com.example.test.repository.MemoRepository;
+
+import java.util.stream.IntStream;
+@SpringBootTest
+public class MemoRepositoryTests {
+	@Autowired
+	MemoRepository memoRepository;
+	@Test
+	public void testClass() {
+		System.out.println(memoRepository.getClass().getName());
+	}
+	@Test
+	public void testInsertDummies() {
+		IntStream.rangeClosed(1,100).forEach(i -> {
+			Memo memo = Memo.builder().memoText(Integer.toString(i)).build();
+			memoRepository.save(memo);
+		});
+	}
+}
