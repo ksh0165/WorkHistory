@@ -1,0 +1,37 @@
+[application.properties]
+spring.thymeleaf.cache=false
+
+server.port=8070
+======================================
+
+[SampleController]
+package com.example.test1.controller;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/sample")
+@Log4j2
+public class SampleController {
+	@GetMapping("/ex1")
+	public void ex1() {
+		log.info("ex1.............................");
+	}
+}
+
+==============================================
+
+[ex.html]
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1 th:text="${'Hello World'}"></h1>
+</body>
+</html>
