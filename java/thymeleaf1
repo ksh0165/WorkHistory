@@ -124,3 +124,18 @@ public class SampleDTO {
 </ul>
 </body>
 </html>
+---------------------------------------------------------------
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<ul>
+	<li th:each="dto ,state : ${list}" th:text="${dto.sno % 5 == 0}?${dto.sno}: ${dto.first}">
+	</li>
+</ul>
+</body>
+</html>
