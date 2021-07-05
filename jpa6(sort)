@@ -103,3 +103,24 @@ public class MemoRepositoryTests {
 			System.out.println(memo);
 		});
 	}
+---------------------------------------------------------------------
+
+
+	@Test
+	public void testQuerymethods() {
+		List<Memo> list = memoRepository.findByMnoBetweenOrderByMnoDesc(70L, 80L);
+		for(Memo memo : list) {
+			System.out.println(memo);
+		}
+	}
+	
+	[MemoRepository]
+	package com.example.test.repository;
+import java.util.List;
+
+import  org.springframework.data.jpa.repository.JpaRepository;
+import com.example.test.entity.Memo;
+public interface MemoRepository extends JpaRepository<Memo,Long>{
+	//mno 역순으로 정렬
+	List<Memo> findByMnoBetweenOrderByMnoDesc(Long from, Long to);
+}
