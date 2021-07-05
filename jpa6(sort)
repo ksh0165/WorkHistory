@@ -124,3 +124,26 @@ public interface MemoRepository extends JpaRepository<Memo,Long>{
 	//mno 역순으로 정렬
 	List<Memo> findByMnoBetweenOrderByMnoDesc(Long from, Long to);
 }
+
+------------------------------------------------------------------------
+
+	@Test
+	public void testQueryMethodWithPageable() {
+		Pageable pageable = PageRequest.of(0, 10,Sort.by("mno").descending());
+		Page<Memo> result = memoRepository.findByMnoBetween(10L, 50L, pageable);
+		result.get().forEach(memo -> System.out.println(memo));
+	}
+	[MemoRepository]
+	package com.example.test.repository;
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import  org.springframework.data.jpa.repository.JpaRepository;
+import com.example.test.entity.Memo;
+public interface MemoRepository extends JpaRepository<Memo,Long>{
+	//mno 역순으로 정렬
+	List<Memo> findByMnoBetweenOrderByMnoDesc(Long from, Long to);
+	Page<Memo> findByMnoBetween(Long from, Long to, Pageable pageable);
+}
+
