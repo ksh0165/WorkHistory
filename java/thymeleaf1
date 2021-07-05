@@ -90,3 +90,20 @@ public class SampleDTO {
 </ul>
 </body>
 </html>
+
+----------------------------------------------------
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<ul>
+	<li th:each="dto ,state : ${list}" th:if="${dto.sno % 5 == 0}">
+		[[${state.index}]] --- [[${dto}]]
+	</li>
+</ul>
+</body>
+</html>
