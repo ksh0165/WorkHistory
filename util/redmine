@@ -1,3 +1,6 @@
+docker run -itd --privileged -p 10080:8080 -p 3306:3306 -p 180:80 -p 221:21 -p 222:22 -p 223:23 –v /sys/fs/cgroup:/sys/fs/cgroup:ro centos /usr/sbin/init
+
+
 yum update -y
 sleep 3
 yum install -y wget
