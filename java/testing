@@ -1,0 +1,42 @@
+package work;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+public class JTest1 {
+
+	public static void main(String[] args) {
+		Map<String,Object> map = new HashMap<String, Object>();
+
+		String text1 = "[{\"professor\":\"김교수\",\"student\":\"이학생\"}, {\"professor\":\"박교수\", \"student\":\"최학생\" },{\"professor\":\"한교수\", \"student\":\"황학생\" }]";		
+		List list = new ArrayList();
+		JSONArray arr = JSONArray.fromObject(text1);
+		for(int i =0; i<arr.size();i++){
+			JSONObject jo = JSONObject.fromObject(arr.get(i));
+			Iterator<String> itr = jo.keys();
+			Map<String, Object> ld = new HashMap<String, Object>();
+			while(itr.hasNext()){
+				String key = itr.next();
+				ld.put(key,jo.getString(key));
+			}
+			list.add(ld);
+		}
+		
+		for (int i =0 ; i< list.size(); i ++){
+			Map<String,Object> mapValue = (Map<String, Object>) list.get(i);
+			
+			for(Map.Entry et : mapValue.entrySet()){
+				System.out.println("key: "+et.getKey()+"|value:"+et.getValue());
+			}
+		}
+		
+	}	
+
+
+}
