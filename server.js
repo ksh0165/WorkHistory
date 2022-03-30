@@ -79,25 +79,21 @@ server.get('/users',(req,res,next)=>{
         // const data = jwt.verify(token, JWT_SECRET_KEY);
         const _username = req.query.username;
         const _password = req.query.password;
-        let resVal,userData = null;
+        let resVal = "";
         axios({
             url: 'http://localhost:3001/users',
             method: 'GET'
-          }).then((res)=>{
+          }).then((response)=>{
             console.log(_username);
-            if(_username === JSON.parse(JSON.stringify(res.data))[0].username){
-                resVal=JSON.parse(JSON.stringify(res.data))[0].status;
-                console.log(resVal);
+            console.log(JSON.parse(JSON.stringify(response.data))[0].username);
+            if(_username == JSON.parse(JSON.stringify(response.data))[0].username){
+                resVal=JSON.parse(JSON.stringify(response.data))[0].status;
             }else{
                 resVal="";
             } 
-
-          });
-
-        if(resVal != "") {
             console.log('send json data isLoggedIn true');
-            res.json({'isLoggedIn':true});
-        }
+            return res.json({"isLoggedIn":resVal});
+          });
     }catch(err){
         console.log(req.query.username+req.query.password)
         res.status(401).json();

@@ -10,36 +10,36 @@ import axios from 'axios';
 // npm install htpp-proxy-middleware --save
 function App () {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const fetchAuth = async () =>{
-        try{
-            const response = await axios.get(
-                '/users',
-                {
-                    params:{
-                        username:'test',
-                        password:123
-                    }
-                },
-                { withCredentials: true }
-            )
-            .then(function (response){
-                console.log(response.data.isLoggedIn);
-                if(response.data.isLoggedIn === true){
-                   setIsLoggedIn(true);
-                }
-            }).catch(function (err){
-                alert("인증에 실패하였습니다.");
-            }).then(function(){
+    // const fetchAuth = async () =>{
+    //     try{
+    //         const response = await axios.get(
+    //             '/users',
+    //             {
+    //                 params:{
+    //                     username:'test',
+    //                     password:123
+    //                 }
+    //             },
+    //             { withCredentials: true }
+    //         )
+    //         .then(function (response){
+    //             console.log(response.data.isLoggedIn);
+    //             if(response.data.isLoggedIn === true){
+    //                setIsLoggedIn(true);
+    //             }
+    //         }).catch(function (err){
+    //             alert("인증에 실패하였습니다.");
+    //         }).then(function(){
 
-            })
-        }catch(e){
-            alert("인증 시도중 실패하였습니다.");
-        }
-    }
+    //         })
+    //     }catch(e){
+    //         alert("인증 시도중 실패하였습니다.");
+    //     }
+    // }
 
-    useEffect(()=>{
-        fetchAuth();
-    },[])
+    // useEffect(()=>{
+    //     fetchAuth();
+    // },[])
     return (
         <>
             <AppRouter isLoggedIn={isLoggedIn} />
