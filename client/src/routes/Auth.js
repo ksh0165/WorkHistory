@@ -6,6 +6,7 @@ export default function Auth ({LoginOn}) {
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [error,setError] = useState("");
     // const navigate = useNavigate();
     const onChange = (e) =>{
         const { target: {name,value},} = e;
@@ -35,20 +36,14 @@ export default function Auth ({LoginOn}) {
                 if(response.data.isLoggedIn === true){
                     LoginOn(true);
                 }else{
-                    alert("다시 로그인을 하시기 바랍니다.");
-                    window.location.reload();
+                    setError("다시 로그인을 하시기 바랍니다.");
+                    // window.location.reload();
                 }
             }).catch(function (err){
-                alert("인증에 실패하였습니다.");
+                setError("인증에 실패하였습니다.");
             }).then(function(){
 
             })
-
-            if(isLoggedIn){
-
-            }else{
-
-            }
         }catch(err){
             console.log(err);
         }
@@ -63,6 +58,7 @@ export default function Auth ({LoginOn}) {
                 </td>
                 <td><input type="password" name="password" placeholder="password" value={password} required onChange={onChange}/></td>
                 <td><input type="submit" value="Log In" /></td>
+                <td>{error}</td>
             </tr>
             </tbody>
             </table>
