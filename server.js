@@ -79,13 +79,19 @@ server.get('/users',(req,res,next)=>{
         // const data = jwt.verify(token, JWT_SECRET_KEY);
         const _username = req.query.username;
         const _password = req.query.password;
-        let resVal = null;
+        let resVal,userData = null;
         axios({
             url: 'http://localhost:3001/users',
             method: 'GET'
           }).then((res)=>{
-            console.log(JSON.stringify(res.data));
-            resVal=JSON.stringify(res.data)[0].status;
+            console.log(_username);
+            if(_username === JSON.parse(JSON.stringify(res.data))[0].username){
+                resVal=JSON.parse(JSON.stringify(res.data))[0].status;
+                console.log(resVal);
+            }else{
+                resVal="";
+            } 
+
           });
 
         if(resVal != "") {
