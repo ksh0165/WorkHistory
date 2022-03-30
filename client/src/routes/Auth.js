@@ -2,7 +2,7 @@ import {useState} from 'react';
 import axios from 'axios';
 // import { useNavigate } from 'react-router-dom';
 
-export default function Auth ({LoginOn}) {
+export default function Auth ({LoginStatus}) {
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -34,7 +34,7 @@ export default function Auth ({LoginOn}) {
             .then(function (response){
                 console.log(response.data);
                 if(response.data.isLoggedIn === true){
-                    LoginOn(true);
+                    LoginStatus(true);
                 }else{
                     setError("다시 로그인을 하시기 바랍니다.");
                     // window.location.reload();

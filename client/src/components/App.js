@@ -11,7 +11,8 @@ import axios from 'axios';
 function App () {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    const LoginOn = (isLog) =>{
+    const LoginStatus = (isLog) =>{
+        alert("LoginStatus call "+isLog);
         setIsLoggedIn(isLog);
     }
     // const fetchAuth = async () =>{
@@ -46,7 +47,7 @@ function App () {
     // },[])
     return (
         <>
-            <AppRouter LoginOn={LoginOn} isLoggedIn={isLoggedIn} />
+            <AppRouter LoginStatus={LoginStatus} isLoggedIn={isLoggedIn} />
             <footer>&copy; {new Date().getFullYear()} Nwitter</footer>
         </>
     )
