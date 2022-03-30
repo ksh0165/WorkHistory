@@ -7,21 +7,26 @@ import axios from 'axios';
 //express
 //concurrently nodemon
 //json-server-auth jsonwebtoken path body-parser
-
+// npm install htpp-proxy-middleware --save
 function App () {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const fetchAuth = async () =>{
         try{
             const response = await axios.get(
-                '/login',{
+                '/users',
+                {
                     params:{
                         username:'test',
                         password:123
                     }
-                }
+                },
+                { withCredentials: true }
             )
             .then(function (response){
-                setIsLoggedIn(response.data);
+                console.log(response.data.isLoggedIn);
+                if(response.data.isLoggedIn === true){
+                   setIsLoggedIn(true);
+                }
             }).catch(function (err){
                 alert("인증에 실패하였습니다.");
             }).then(function(){
