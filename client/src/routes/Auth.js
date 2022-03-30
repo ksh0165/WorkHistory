@@ -1,11 +1,12 @@
 import {useState} from 'react';
 import axios from 'axios';
+// import { useNavigate } from 'react-router-dom';
 
-export default function Auth () {
+export default function Auth ({LoginOn}) {
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+    // const navigate = useNavigate();
     const onChange = (e) =>{
         const { target: {name,value},} = e;
         if(name === "username"){
@@ -32,7 +33,10 @@ export default function Auth () {
             .then(function (response){
                 console.log(response.data);
                 if(response.data.isLoggedIn === true){
-                    setIsLoggedIn(true);
+                    LoginOn(true);
+                }else{
+                    alert("다시 로그인을 하시기 바랍니다.");
+                    window.location.reload();
                 }
             }).catch(function (err){
                 alert("인증에 실패하였습니다.");

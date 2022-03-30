@@ -10,6 +10,10 @@ import axios from 'axios';
 // npm install htpp-proxy-middleware --save
 function App () {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const LoginOn = (isLog) =>{
+        setIsLoggedIn(isLog);
+    }
     // const fetchAuth = async () =>{
     //     try{
     //         const response = await axios.get(
@@ -42,7 +46,7 @@ function App () {
     // },[])
     return (
         <>
-            <AppRouter isLoggedIn={isLoggedIn} />
+            <AppRouter LoginOn={LoginOn} isLoggedIn={isLoggedIn} />
             <footer>&copy; {new Date().getFullYear()} Nwitter</footer>
         </>
     )
