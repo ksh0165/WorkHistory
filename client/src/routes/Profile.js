@@ -1,8 +1,13 @@
+import {Link,useNavigate } from 'react-router-dom';
+ 
 const Profile = ({LoginStatus}) => {
-
+    const navigate = useNavigate();
     return (
         <>
-            <button onClick={()=>{LoginStatus(false);}} >LogOut</button>
+            <button onClick={()=>{
+                LoginStatus(false);
+                navigate("/");
+            }} >LogOut</button>
         </>
     )
 }
