@@ -1,4 +1,4 @@
-import {Link,useNavigate } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
  
 const Profile = ({LoginStatus}) => {
     const navigate = useNavigate();

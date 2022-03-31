@@ -1,10 +1,17 @@
 {
-    "users":[
-        {
-            "id":1,
-            "username":"test",
-            "password":123,
-            "status":true
-        }
-    ]
+  "users": [
+    {
+      "id": 1,
+      "username": "test",
+      "password": 123,
+      "status": true
+    }
+  ],
+  "notes": [
+    {
+      "id": 1,
+      "text": "면접보러가",
+      "createAt": 1648688599201
+    }
+  ]
 }
