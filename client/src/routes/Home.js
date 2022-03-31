@@ -6,24 +6,14 @@ const Home = () => {
     const [isLoding, setIsLoding] = useState(false);
     const [message,setMessage] = useState("");
     const [maxId,setMaxId] = useState();
-    let newwtDatas = null;
-    const getMaxId = async () => {
-        await fetch("http://localhost:3001/notes")
-        .then(res=>{
-            return res.json();
-        })
-        .then(data =>{
-            setMaxId(data.length+1);
-            console.log(data.length+1);
-        })
-    }
+
     const getNweets = async () =>{
         await fetch("http://localhost:3001/notes")
         .then(res=>{
             return res.json();
         })
         .then(data =>{
-            // newwtDatas= data;
+            setMaxId(data.length+1);
             data.map((text)=>(
                 setNweets((prev)=>[text,...prev])
             ));
@@ -31,7 +21,6 @@ const Home = () => {
     }
 
     useEffect(()=>{
-        getMaxId();
         getNweets();
     },[])
 
@@ -53,7 +42,6 @@ const Home = () => {
         .then(res=>{
             if(res.ok){
                 setMessage("생성이 완료되었습니다.");
-                // navigate("/");
                 setIsLoding(false);
             }
         })
