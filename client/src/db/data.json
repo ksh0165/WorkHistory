@@ -11,7 +11,14 @@
     {
       "id": 1,
       "text": "면접보러가",
+      "userId": "test",
       "createAt": 1648688599201
+    },
+    {
+      "id": 2,
+      "text": "파워보이스 면접",
+      "userId": "test",
+      "createAt": 1648746573600
     }
   ]
 }

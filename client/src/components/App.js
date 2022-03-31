@@ -10,10 +10,15 @@ import axios from 'axios';
 // npm install htpp-proxy-middleware --save
 function App () {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+    const [userId,setUserId] = useState('');
     const LoginStatus = (isLog) =>{
         alert("LoginStatus call "+isLog);
         setIsLoggedIn(isLog);
+    }
+
+    const getUserId = (id) =>{
+        console.log(id);
+        setUserId(id);
     }
     // const fetchAuth = async () =>{
     //     try{
@@ -47,7 +52,7 @@ function App () {
     // },[])
     return (
         <>
-            <AppRouter LoginStatus={LoginStatus} isLoggedIn={isLoggedIn} />
+            <AppRouter LoginStatus={LoginStatus} isLoggedIn={isLoggedIn} getUserId={getUserId} userId={userId} />
             <footer>&copy; {new Date().getFullYear()} Nwitter</footer>
         </>
     )

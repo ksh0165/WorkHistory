@@ -6,18 +6,18 @@ import EmptyPage from "./EmptyPage";
 import Navigation from './Navigation';
 import Profile from 'routes/Profile';
 
-const AppRouter = ({isLoggedIn, LoginStatus}) => {
+const AppRouter = ({isLoggedIn, LoginStatus,getUserId,userId}) => {
     return (
         <Router>
             {isLoggedIn && <Navigation />}
             <Routes>
                 {isLoggedIn ? (
                     <>
-                        <Route path="/" element={<Home />}/>
+                        <Route path="/" element={<Home userId={userId}/>}/>
                         <Route path="/profile" element={<Profile LoginStatus={LoginStatus} />}/>
                     </>
                 ):(
-                    <Route path="/"element={<Auth LoginStatus={LoginStatus}/>}/>
+                    <Route path="/"element={<Auth LoginStatus={LoginStatus} getUserId={getUserId}/>}/>
                 )}
                 <Route path="*" element={<EmptyPage />}/>
             </Routes>

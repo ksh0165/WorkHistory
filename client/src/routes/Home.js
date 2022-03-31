@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import { axios } from 'axios';
-const Home = () => {
+const Home = ({userId}) => {
     const [nweet, setNweet] = useState("");
     const [nweets, setNweets] = useState([]);
     const [isLoding, setIsLoding] = useState(false);
@@ -24,7 +24,7 @@ const Home = () => {
         getNweets();
     },[])
 
-    //notes {id: id, text:nweet, createAt: Data.now() }
+    //notes {id: id, text:nweet, userId:userId, createAt: Data.now() }
     const onSubmit = (e) => {
         e.preventDefault();
         setIsLoding(true);
@@ -35,7 +35,8 @@ const Home = () => {
             },
             body:JSON.stringify({
                 id: maxId,
-                text:nweet, 
+                text:nweet,
+                userId:userId, 
                 createAt: Date.now()
             })
         })
@@ -68,6 +69,7 @@ const Home = () => {
                 {nweets.map((nweet)=>(
                 <tr key={nweet.id}>
                     <td>{nweet.text}</td>
+                    <td>{nweet.userId}</td>
                     <td>{new Date(nweet.createAt).toLocaleDateString("en-GB",{
                             hour: "2-digit",
                             minute: "2-digit"
