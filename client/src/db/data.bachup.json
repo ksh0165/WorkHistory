@@ -19,24 +19,6 @@
       "text": "파워보이스 면접",
       "userId": "test",
       "createAt": 1648746573600
-    },
-    {
-      "id": 3,
-      "text": "신규",
-      "userId": "test",
-      "createAt": 1648750191415
-    },
-    {
-      "id": 4,
-      "text": "신규2",
-      "userId": "test",
-      "createAt": 1648750222687
-    },
-    {
-      "id": 5,
-      "text": "이것때문에 고생",
-      "userId": "test",
-      "createAt": 1648750257727
     }
   ]
 }

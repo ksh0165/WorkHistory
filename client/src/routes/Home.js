@@ -1,11 +1,13 @@
-import {useEffect, useState} from 'react';
-import { axios } from 'axios';
+import {useEffect, useState,useCallback} from 'react';
+
 const Home = ({userId}) => {
     const [nweet, setNweet] = useState("");
     const [nweets, setNweets] = useState([]);
     const [isLoding, setIsLoding] = useState(false);
     const [message,setMessage] = useState("");
     const [maxId,setMaxId] = useState();
+    const forceUpdate = useCallback(()=>setNweet(""),[]);
+    const sortedNweet = nweets.sort((a,b)=>(b.createAt-a.createAt));
 
     const getNweets = async () =>{
         await fetch("http://localhost:3001/notes")
@@ -28,6 +30,9 @@ const Home = ({userId}) => {
     const onSubmit = (e) => {
         e.preventDefault();
         setIsLoding(true);
+        const id = maxId;
+        const text = nweet;
+        const createAt = Date.now();
         fetch(`http://localhost:3001/notes/`,{
             method:'POST',
             headers:{
@@ -37,16 +42,19 @@ const Home = ({userId}) => {
                 id: maxId,
                 text:nweet,
                 userId:userId, 
-                createAt: Date.now()
+                createAt: createAt
             })
         })
         .then(res=>{
             if(res.ok){
                 setMessage("생성이 완료되었습니다.");
+                const newNweets = [...nweets];
+                newNweets.push({id:id,text:text,userId:userId,createAt:createAt})
+                setNweets(newNweets);
+                forceUpdate();
                 setIsLoding(false);
             }
         })
-        setNweet("");
     }
 
     const onChange = (e) => {
@@ -66,7 +74,7 @@ const Home = ({userId}) => {
         </form>
         <table>
             <tbody>
-                {nweets.map((nweet)=>(
+                {sortedNweet.map((nweet)=>(
                 <tr key={nweet.id}>
                     <td>{nweet.text}</td>
                     <td>{nweet.userId}</td>
