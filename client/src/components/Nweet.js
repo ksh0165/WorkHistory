@@ -19,6 +19,7 @@ const Nweet = ({nweet,isOwner,onDeleteNweet,onUpdateNweet}) => {
             ...nweet,
             text: newNweet
         }) 
+        setEditing(!editing);
     }
 
     return (

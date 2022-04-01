@@ -9,7 +9,6 @@ const Home = ({userId}) => {
     const [maxId,setMaxId] = useState();
     const forceUpdate = useCallback(()=>setNweet(""),[]);
     const sortedNweet = nweets.sort((a,b)=>(b.createAt-a.createAt));
-
     const getNweets = async () =>{
         await fetch("http://localhost:3001/notes")
         .then(res=>{
@@ -65,7 +64,7 @@ const Home = ({userId}) => {
         })
         .then(res=>{
             if(res.ok){
-                setNweets(updatedNweetArray);  
+                setNweets(updatedNweetArray); 
             }
         })
     }
