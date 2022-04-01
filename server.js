@@ -1,3 +1,4 @@
+const express = require('express');
 const jsonServer = require('json-server');
 const server = jsonServer.create();
 const auth = require('json-server-auth');
@@ -8,6 +9,30 @@ const path = require('path');
 const router = jsonServer.router(path.join(__dirname,'data.json'));
 const middlewares = jsonServer.defaults();
 const axios = require('axios');
+const app = express();
+const fileUpload = require('express-fileupload');
+app.use(fileUpload());
+
+app.post('/users/upload',(req,res)=>{
+    let uploadPath;
+    if(req.files === null){
+        return res.status(400).json({msg:'No  file uploaded'});
+    }
+
+    const file = req.files.file;
+
+    uploadPath = __dirname + '/client/public/uploads/'+file.name;
+
+    file.mv(uploadPath,err=>{
+        if(err){
+            console.log(err);
+            return res.status(500).send(err);
+        }
+
+        res.json({fileName: file.name, filePath: uploadPath});
+    });
+});
+
 
 server.use(
     cors({
@@ -23,7 +48,7 @@ server.use(
 server.use(auth);
 server.use(middlewares);
 server.use(jsonServer.bodyParser);
-
+app.use(server);
 
 // server.get(`/users/me`,auth,(req,res)=>{
 //     const { authorization } = req.headers;
@@ -56,7 +81,7 @@ server.use(jsonServer.bodyParser);
 //     }
 // })
 
-server.get('/users',(req,res,next)=>{
+app.get('/users',(req,res)=>{
     console.log('/users url call');
     // const { authorization } = req.headers;
     // if(!authorization){
@@ -83,7 +108,7 @@ server.get('/users',(req,res,next)=>{
         axios({
             url: 'http://localhost:3001/users',
             method: 'GET'
-          }).then((response)=>{
+        }).then((response)=>{
             console.log(_username);
             console.log(JSON.parse(JSON.stringify(response.data))[0].username);
             if(_username == JSON.parse(JSON.stringify(response.data))[0].username){
@@ -93,13 +118,12 @@ server.get('/users',(req,res,next)=>{
             } 
             console.log('send json data isLoggedIn true');
             return res.json({"isLoggedIn":resVal});
-          });
+        });
     }catch(err){
         console.log(req.query.username+req.query.password)
         res.status(401).json();
     }
 })
-
 
 // server.use((req,res,next) =>{
 //     console.log(req.body);
@@ -165,4 +189,4 @@ server.get('/users',(req,res,next)=>{
 //     }
 // }
 
-server.listen(5000,()=>console.log('Server started...'));
+app.listen(5000,()=>console.log('Server started...'));

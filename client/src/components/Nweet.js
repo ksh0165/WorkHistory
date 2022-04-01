@@ -15,6 +15,7 @@ const Nweet = ({nweet,isOwner,onDeleteNweet,onUpdateNweet}) => {
 
     const onSubmit = async (e) =>{
         e.preventDefault();
+        console.log(nweet);
         onUpdateNweet({
             ...nweet,
             text: newNweet
@@ -32,6 +33,9 @@ const Nweet = ({nweet,isOwner,onDeleteNweet,onUpdateNweet}) => {
                     </form>&nbsp;
                     <button onClick={toggleEditing}>CANCLE</button>
                     <h4>{nweet.username}&nbsp;
+                        {nweet.filename && (
+                            <img src={`uploads/`+nweet.filename} width="50px" height="50px" />
+                        )}&nbsp;
                         {new Date(nweet.createAt).toLocaleDateString("en-GB",{
                         hour: "2-digit",
                         minute: "2-digit"
@@ -41,6 +45,9 @@ const Nweet = ({nweet,isOwner,onDeleteNweet,onUpdateNweet}) => {
                 <>
                     <h4>{nweet.text}&nbsp;
                         {nweet.username}&nbsp;
+                        {nweet.filename && (
+                            <img src={`uploads/`+nweet.filename} width="50px" height="50px" />
+                        )}&nbsp;
                         {new Date(nweet.createAt).toLocaleDateString("en-GB",{
                         hour: "2-digit",
                         minute: "2-digit"
