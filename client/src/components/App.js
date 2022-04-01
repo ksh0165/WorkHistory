@@ -20,6 +20,10 @@ function App () {
         console.log(id);
         setUserId(id);
     }
+
+    const logOut = () =>{
+        setUserId("");
+    }
     // const fetchAuth = async () =>{
     //     try{
     //         const response = await axios.get(
@@ -52,7 +56,8 @@ function App () {
     // },[])
     return (
         <>
-            <AppRouter LoginStatus={LoginStatus} isLoggedIn={isLoggedIn} getUserId={getUserId} userId={userId} />
+            {userId ? userId+"님 환영합니다.":""}
+            <AppRouter LoginStatus={LoginStatus} isLoggedIn={isLoggedIn} getUserId={getUserId} userId={userId} logOut={logOut}/>
             <footer>&copy; {new Date().getFullYear()} Nwitter</footer>
         </>
     )
