@@ -1,4 +1,5 @@
 import {useEffect, useState,useCallback} from 'react';
+import Nweet from '../components/Nweet';
 
 const Home = ({userId}) => {
     const [nweet, setNweet] = useState("");
@@ -75,14 +76,15 @@ const Home = ({userId}) => {
         <table>
             <tbody>
                 {sortedNweet.map((nweet)=>(
-                <tr key={nweet.id}>
-                    <td>{nweet.text}</td>
-                    <td>{nweet.userId}</td>
-                    <td>{new Date(nweet.createAt).toLocaleDateString("en-GB",{
-                            hour: "2-digit",
-                            minute: "2-digit"
-                        })}</td>
-                </tr>                   
+                // <tr key={nweet.id}>
+                //     <td>{nweet.text}</td>
+                //     <td>{nweet.userId}</td>
+                //     <td>{new Date(nweet.createAt).toLocaleDateString("en-GB",{
+                //             hour: "2-digit",
+                //             minute: "2-digit"
+                //         })}</td>
+                // </tr>  
+                <Nweet nweet={nweet} />                
                 ))}
             </tbody>
         </table>
