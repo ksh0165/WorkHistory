@@ -27,7 +27,23 @@ const Home = ({userId}) => {
         getNweets();
     },[])
 
-    //notes {id: id, text:nweet, userId:userId, createAt: Data.now() }
+    const onDeleteNweet = (deleteId) => {
+        const ok = window.confirm("삭제하시겠습니까?");
+        if(ok){
+            console.log(deleteId);
+            fetch(`http://localhost:3001/notes/${deleteId}`,{
+                method:'DELETE',
+            })
+            .then(res=>{
+                if(res.ok){
+                    setNweets(nweets.filter((dId)=>(dId.id !== deleteId)))
+                    alert(deleteId+" 삭제가 완료되었습니다.")
+                }
+            })
+        }   
+    } 
+
+    //notes {id: id, text:nweet, username:username, createAt: Data.now() }
     const onSubmit = (e) => {
         e.preventDefault();
         setIsLoding(true);
@@ -42,7 +58,7 @@ const Home = ({userId}) => {
             body:JSON.stringify({
                 id: maxId,
                 text:nweet,
-                userId:userId, 
+                username:userId, 
                 createAt: createAt
             })
         })
@@ -50,7 +66,7 @@ const Home = ({userId}) => {
             if(res.ok){
                 setMessage("생성이 완료되었습니다.");
                 const newNweets = [...nweets];
-                newNweets.push({id:id,text:text,userId:userId,createAt:createAt})
+                newNweets.push({id:id,text:text,username:userId,createAt:createAt})
                 setNweets(newNweets);
                 forceUpdate();
                 setIsLoding(false);
@@ -84,7 +100,7 @@ const Home = ({userId}) => {
                 //             minute: "2-digit"
                 //         })}</td>
                 // </tr>  
-                <Nweet nweet={nweet} />                
+                <Nweet key={nweet.id} nweet={nweet} isOwner={userId === nweet.username} onDeleteNweet={onDeleteNweet} />                
                 ))}
             </tbody>
         </table>
