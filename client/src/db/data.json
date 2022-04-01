@@ -84,13 +84,6 @@
       "username": "test",
       "filename": "11.jpg",
       "createAt": 1648844389416
-    },
-    {
-      "id": 12,
-      "text": "try",
-      "username": "test",
-      "filename": "12.jpg",
-      "createAt": 1648844536823
     }
   ]
 }
