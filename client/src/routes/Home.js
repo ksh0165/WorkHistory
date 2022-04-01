@@ -41,7 +41,34 @@ const Home = ({userId}) => {
                 }
             })
         }   
-    } 
+    }
+    
+    const onUpdateNweet = (updateNweet) => {
+        const updatedNweetArray = nweets.map((nweet)=>{
+            if(nweet.id === updateNweet.id){
+                return updateNweet;
+            }
+            return nweet;
+        });
+
+        fetch(`http://localhost:3001/notes/${updateNweet.id}`,{
+            method:'PUT',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({
+                id:updateNweet.id,
+                text:updateNweet.text,
+                username:updateNweet.username,
+                createAt:Date.now()
+            })
+        })
+        .then(res=>{
+            if(res.ok){
+                setNweets(updatedNweetArray);  
+            }
+        })
+    }
 
     //notes {id: id, text:nweet, username:username, createAt: Data.now() }
     const onSubmit = (e) => {
@@ -89,21 +116,19 @@ const Home = ({userId}) => {
             <input style={{opacity: isLoding ? 0.3 : 1}} type="submit" value={isLoding ? "트위터 추가중..." : "트위터 추가"} />
             {message}
         </form>
-        <table>
-            <tbody>
-                {sortedNweet.map((nweet)=>(
-                // <tr key={nweet.id}>
-                //     <td>{nweet.text}</td>
-                //     <td>{nweet.userId}</td>
-                //     <td>{new Date(nweet.createAt).toLocaleDateString("en-GB",{
-                //             hour: "2-digit",
-                //             minute: "2-digit"
-                //         })}</td>
-                // </tr>  
-                <Nweet key={nweet.id} nweet={nweet} isOwner={userId === nweet.username} onDeleteNweet={onDeleteNweet} />                
-                ))}
-            </tbody>
-        </table>
+        <div>
+            {sortedNweet.map((nweet)=>(
+            // <tr key={nweet.id}>
+            //     <td>{nweet.text}</td>
+            //     <td>{nweet.userId}</td>
+            //     <td>{new Date(nweet.createAt).toLocaleDateString("en-GB",{
+            //             hour: "2-digit",
+            //             minute: "2-digit"
+            //         })}</td>
+            // </tr>  
+            <Nweet key={nweet.id} nweet={nweet} isOwner={userId === nweet.username} onDeleteNweet={onDeleteNweet} onUpdateNweet={onUpdateNweet} />                
+            ))}
+        </div>
         </>
     )
 }
