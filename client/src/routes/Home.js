@@ -3,7 +3,7 @@ import Nweet from '../components/Nweet';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const Home = ({userId}) => {
+const Home = ({userInfo}) => {
     const [nweet, setNweet] = useState("");
     const [nweets, setNweets] = useState([]);
     const [isLoding, setIsLoding] = useState(false);
@@ -139,7 +139,7 @@ const Home = ({userId}) => {
             body:JSON.stringify({
                 id: maxId,
                 text:nweet,
-                username:userId,
+                username:userInfo.username,
                 filename:fNm,
                 createAt: createAt
             })
@@ -148,7 +148,7 @@ const Home = ({userId}) => {
             if(res.ok){
                 setMessage("생성이 완료되었습니다.");
                 const newNweets = [...nweets];
-                newNweets.push({id:id,text:text,username:userId,createAt:createAt})
+                newNweets.push({id:id,text:text,username:userInfo.username,createAt:createAt})
                 setNweets(newNweets);
                 forceUpdate();
                 // setMaxId(maxId+1);
@@ -221,7 +221,7 @@ const Home = ({userId}) => {
             //             minute: "2-digit"
             //         })}</td>
             // </tr>  
-            <Nweet key={nweet.id} nweet={nweet} isOwner={userId === nweet.username} onDeleteNweet={onDeleteNweet} onUpdateNweet={onUpdateNweet} />                
+            <Nweet key={nweet.id} nweet={nweet} isOwner={userInfo.username === nweet.username} onDeleteNweet={onDeleteNweet} onUpdateNweet={onUpdateNweet} />                
             ))}
         </div>
         </>

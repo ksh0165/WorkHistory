@@ -4,6 +4,7 @@
       "id": 1,
       "username": "test",
       "password": 123,
+      "nickname": "reactor",
       "status": true
     }
   ],
@@ -11,7 +12,7 @@
     {
       "id": 1,
       "text": "면접보러가",
-      "username": "test",
+      "username": "테스터",
       "filename": "",
       "createAt": 1648688599201
     },
@@ -46,7 +47,7 @@
     {
       "id": 6,
       "text": "파일 업로드 소스 추가 완료",
-      "username": "test",
+      "username": "테스터",
       "filename": "",
       "createAt": 1648803845474
     },
@@ -74,7 +75,7 @@
     {
       "id": 10,
       "text": "try",
-      "username": "test",
+      "username": "테스터",
       "filename": "10.jpg",
       "createAt": 1648918614424
     },
@@ -87,17 +88,17 @@
     },
     {
       "id": 12,
-      "text": "try",
+      "text": "try router test",
       "username": "test",
       "filename": "12.jpg",
-      "createAt": 1648923648679
+      "createAt": 1648927084532
     },
     {
       "id": 13,
-      "text": "try",
+      "text": "try add test",
       "username": "test",
       "filename": "13.jpg",
-      "createAt": 1648923669578
+      "createAt": 1648928464458
     }
   ]
 }

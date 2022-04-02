@@ -33,9 +33,10 @@ export default function Auth ({LoginStatus,getUserId}) {
             )
             .then(function (response){
                 console.log(response.data);
-                if(response.data.isLoggedIn === true){
+                console.log(JSON.stringify(response.data));
+                if(JSON.parse(JSON.stringify(response.data)).username !== ""){
                     LoginStatus(true);
-                    getUserId(username);
+                    getUserId(JSON.parse(JSON.stringify(response.data)));
                 }else{
                     setError("다시 로그인을 하시기 바랍니다.");
                     // window.location.reload();

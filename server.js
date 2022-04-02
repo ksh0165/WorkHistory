@@ -6,7 +6,7 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const JWT_SECRET_KEY=require('json-server-auth/dist/constants').JWT_SECRET_KEY;
 const path = require('path');
-const router = jsonServer.router(path.join(__dirname,'data.json'));
+const router = jsonServer.router(path.join(__dirname,'/client/src/db/data.json'));
 const middlewares = jsonServer.defaults();
 const axios = require('axios');
 const app = express();
@@ -130,13 +130,15 @@ app.get('/users',(req,res)=>{
         }).then((response)=>{
             console.log(_username);
             console.log(JSON.parse(JSON.stringify(response.data))[0].username);
+            console.log(JSON.parse(JSON.stringify(response.data))[0].nickname);
+            console.log(JSON.parse(JSON.stringify(response.data))[0]);
             if(_username == JSON.parse(JSON.stringify(response.data))[0].username){
                 resVal=JSON.parse(JSON.stringify(response.data))[0].status;
             }else{
                 resVal="";
             } 
             console.log('send json data isLoggedIn true');
-            return res.json({"isLoggedIn":resVal});
+            return res.json(JSON.parse(JSON.stringify(response.data))[0]);
         });
     }catch(err){
         console.log(req.query.username+req.query.password)

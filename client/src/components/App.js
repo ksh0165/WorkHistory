@@ -10,19 +10,19 @@ import axios from 'axios';
 // npm install htpp-proxy-middleware --save
 function App () {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [userId,setUserId] = useState('');
+    const [userInfo,setUserInfo] = useState([]);
     const LoginStatus = (isLog) =>{
         alert("LoginStatus call "+isLog);
         setIsLoggedIn(isLog);
     }
 
-    const getUserId = (id) =>{
-        console.log(id);
-        setUserId(id);
+    const getUserId = (userInfo) =>{//로그인한 username state에 저장하는 용도
+        console.log(userInfo);
+        setUserInfo(userInfo);
     }
 
     const logOut = () =>{
-        setUserId("");
+        setUserInfo([]);
     }
     // const fetchAuth = async () =>{
     //     try{
@@ -56,8 +56,8 @@ function App () {
     // },[])
     return (
         <>
-            {userId ? userId+"님 환영합니다.":""}
-            <AppRouter LoginStatus={LoginStatus} isLoggedIn={isLoggedIn} getUserId={getUserId} userId={userId} logOut={logOut}/>
+            {userInfo.nickname ? userInfo.nickname+"님 환영합니다.":""}
+            <AppRouter LoginStatus={LoginStatus} isLoggedIn={isLoggedIn} getUserId={getUserId} userInfo={userInfo} logOut={logOut}/>
             <footer>&copy; {new Date().getFullYear()} Nwitter</footer>
         </>
     )
