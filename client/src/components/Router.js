@@ -14,7 +14,7 @@ const AppRouter = ({isLoggedIn, LoginStatus,getUserId,userId,logOut}) => {
                 {isLoggedIn ? (
                     <>
                         <Route path="/" element={<Home userId={userId}/>}/>
-                        <Route path="/profile" element={<Profile LoginStatus={LoginStatus} logOut={logOut}/>}/>
+                        <Route path="/profile" element={<Profile LoginStatus={LoginStatus} logOut={logOut} />}/>
                     </>
                 ):(
                     <Route path="/"element={<Auth LoginStatus={LoginStatus} getUserId={getUserId}/>}/>

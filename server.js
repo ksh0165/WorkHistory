@@ -11,9 +11,14 @@ const middlewares = jsonServer.defaults();
 const axios = require('axios');
 const app = express();
 const fileUpload = require('express-fileupload');
+const timeout = require('connect-timeout');
+const fs = require('fs');
+
+app.use(timeout('5s'))
 app.use(fileUpload());
 
 app.post('/users/upload',(req,res)=>{
+    console.log('/users/upload');
     let uploadPath;
     if(req.files === null){
         return res.status(400).json({msg:'No  file uploaded'});
@@ -26,13 +31,27 @@ app.post('/users/upload',(req,res)=>{
     file.mv(uploadPath,err=>{
         if(err){
             console.log(err);
-            return res.status(500).send(err);
+            return res.status(500).json(err);
         }
 
         res.json({fileName: file.name, filePath: uploadPath});
     });
 });
 
+app.delete("/users/delete", async(req,res)=> {
+    console.log("/users/delete");
+    const deleteId = req.query.id;
+    console.log(deleteId);
+    console.log(fs.existsSync(path.join(__dirname,"/client/public/uploads/"+deleteId+".jpg")));
+    if(fs.existsSync(path.join(__dirname,"/client/public/uploads/"+deleteId+".jpg"))){
+        try{
+            fs.unlinkSync(path.join(__dirname,"/client/public/uploads/"+deleteId+".jpg"));
+            console.log("image delete");
+        }catch(err){
+            console.log(err);
+        }
+    }
+})
 
 server.use(
     cors({
@@ -121,7 +140,7 @@ app.get('/users',(req,res)=>{
         });
     }catch(err){
         console.log(req.query.username+req.query.password)
-        res.status(401).json();
+        res.status(401).json({msg:err});
     }
 })
 

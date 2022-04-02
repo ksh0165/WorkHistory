@@ -1,6 +1,7 @@
 import {useEffect, useState,useCallback} from 'react';
 import Nweet from '../components/Nweet';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Home = ({userId}) => {
     const [nweet, setNweet] = useState("");
@@ -11,9 +12,10 @@ const Home = ({userId}) => {
     const forceUpdate = useCallback(()=>setNweet(""),[]);
     const sortedNweet = nweets.sort((a,b)=>(b.createAt-a.createAt));
     const [attachment, setAttachment] = useState("");
-    const onClearAttachment = () => {{setAttachment("");setFilename("");setFile(""); }}
+    const onClearAttachment = useCallback(() => setAttachment(""),[]);
     const [file, setFile] = useState("");
     const [filename, setFilename] = useState("");
+    const navigate = useNavigate();
 
     const getNweets = async () =>{
         await fetch("http://localhost:3001/notes")
@@ -42,9 +44,27 @@ const Home = ({userId}) => {
             .then(res=>{
                 if(res.ok){
                     setNweets(nweets.filter((dId)=>(dId.id !== deleteId)))
-                    setMessage(deleteId+" 삭제가 완료되었습니다.")
+                    setMessage(deleteId+" 삭제가 완료되었습니다.");
                 }
             })
+            
+            const response = axios.delete(
+                '/users/delete',
+                {
+                    params:{
+                        id:deleteId
+                    }
+                },
+                { withCredentials: true }
+            )
+            .then(function (response){
+                console.log(response.data);
+            }).catch(function (err){
+                alert(err);
+            }).then(function(){
+                setMaxId(maxId-1);
+            })
+
         }   
     }
     
@@ -79,6 +99,7 @@ const Home = ({userId}) => {
     //notes {id: id, text:nweet, username:username, filename:filename, createAt: Data.now() }
     const onSubmit = async (e) => {
         e.preventDefault();
+        alert(maxId);
         if(e.target.nweetText.value === "" && attachment === ""){
             setMessage("내용을 입력해주세요.");
             return;
@@ -91,6 +112,25 @@ const Home = ({userId}) => {
         if(attachment !== ""){
             fNm = filename;
         }
+        if(attachment !== ""){
+            const formData = new FormData();
+            formData.append('file',file);
+            try{
+                const res = await axios.post('/users/upload', formData,{
+                    headers:{
+                        'Content-Type':'multipart/form-data'
+                    }
+                });
+                console.log(res);
+                const {fileName, filePath} = res.data;
+
+                console.log(filePath," + ",fileName);
+                setMessage('File Uploaded');
+            }catch(err){
+                alert(err);
+            }
+        }
+
         fetch(`http://localhost:3001/notes/`,{
             method:'POST',
             headers:{
@@ -111,34 +151,12 @@ const Home = ({userId}) => {
                 newNweets.push({id:id,text:text,username:userId,createAt:createAt})
                 setNweets(newNweets);
                 forceUpdate();
+                // setMaxId(maxId+1);
+                navigate("/profile");
+                navigate("/");
             }
         })
-        if(attachment !== ""){
-            const formData = new FormData();
-            formData.append('file',file);
-            try{
-                const res = await axios.post('/users/upload', formData,{
-                    headers:{
-                        'Content-Type':'multipart/form-data'
-                    }
-                });
-                console.log(res);
-                const {fileName, filePath} = res.data;
 
-                console.log(filePath," + ",fileName);
-                setMessage('File Uploaded');
-            }catch(err){
-                alert(err);
-                fetch(`http://localhost:3001/notes/${maxId}`,{
-                method:'DELETE',
-                })
-                .then(res=>{
-                    if(res.ok){
-                        setNweets(nweets.filter((dId)=>(dId.id !== maxId)))
-                    }
-                })
-            }
-        }
         setIsLoding(false);
     }
 
@@ -179,12 +197,12 @@ const Home = ({userId}) => {
 
     return (
         <>
+        {maxId}
         <form onSubmit={onSubmit}>
             <input type="text" name="nweetText" value={nweet} onChange={onChange} placeholder="what`s on your mind?" maxLength={120} />
             <input style={{opacity: isLoding ? 0.3 : 1}} type="submit" value={isLoding ? "트위터 추가중..." : "트위터 추가"} />
             {message}
             <input type="file" name="file" accept="image/*" onChange={onFileChange}/>
-            <input type="submit" value="upload" />
             {attachment && (
                 <div>
                     <img src={attachment} width="50px" height="50px" />
