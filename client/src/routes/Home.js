@@ -197,33 +197,32 @@ const Home = ({userInfo}) => {
 
     return (
         <>
-        {maxId}
-        <form onSubmit={onSubmit}>
-            <input type="text" name="nweetText" value={nweet} onChange={onChange} placeholder="what`s on your mind?" maxLength={120} />
-            <input style={{opacity: isLoding ? 0.3 : 1}} type="submit" value={isLoding ? "트위터 추가중..." : "트위터 추가"} />
-            {message}
-            <input type="file" name="file" accept="image/*" onChange={onFileChange}/>
-            {attachment && (
-                <div>
-                    <img src={attachment} width="50px" height="50px" />
-                    <button onClick={onClearAttachment} >CLEAR</button>
-                </div>
-            )}       
-        </form>
-        <div>
-            {sortedNweet.map((nweet)=>(
-            // <tr key={nweet.id}>
-            //     <td>{nweet.text}</td>
-            //     <td>{nweet.username}</td>
-            //     <td>{nweet.filename}</td>
-            //     <td>{new Date(nweet.createAt).toLocaleDateString("en-GB",{
-            //             hour: "2-digit",
-            //             minute: "2-digit"
-            //         })}</td>
-            // </tr>  
-            <Nweet key={nweet.id} nweet={nweet} isOwner={userInfo.username === nweet.username} onDeleteNweet={onDeleteNweet} onUpdateNweet={onUpdateNweet} />                
-            ))}
-        </div>
+            <form onSubmit={onSubmit}>
+                <input type="text" name="nweetText" value={nweet} onChange={onChange} placeholder="what`s on your mind?" maxLength={120} />
+                <input style={{opacity: isLoding ? 0.3 : 1}} type="submit" value={isLoding ? "트위터 추가중..." : "트위터 추가"} />
+                {message}
+                <input type="file" name="file" accept="image/*" onChange={onFileChange}/>
+                {attachment && (
+                    <div>
+                        <img src={attachment} width="50px" height="50px" />
+                        <button onClick={onClearAttachment} >CLEAR</button>
+                    </div>
+                )}       
+            </form>
+            <div>
+                {sortedNweet.map((nweet)=>(
+                // <tr key={nweet.id}>
+                //     <td>{nweet.text}</td>
+                //     <td>{nweet.username}</td>
+                //     <td>{nweet.filename}</td>
+                //     <td>{new Date(nweet.createAt).toLocaleDateString("en-GB",{
+                //             hour: "2-digit",
+                //             minute: "2-digit"
+                //         })}</td>
+                // </tr>  
+                <Nweet key={nweet.id} nweet={nweet} isOwner={userInfo.username === nweet.username} onDeleteNweet={onDeleteNweet} onUpdateNweet={onUpdateNweet} />                
+                ))}
+            </div>
         </>
     )
 }

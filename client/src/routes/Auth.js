@@ -51,16 +51,16 @@ export default function Auth ({LoginStatus,getUserId}) {
         }
     }
     return (<div>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} className="container">
             <table>
             <tbody>
             <tr>
                 <td>
-                <input type="text" name="username" placeholder="username" value={username} required onChange={onChange} />
+                <input type="text" name="username" placeholder="username" value={username} required onChange={onChange} className="authInput" />
                 </td>
-                <td><input type="password" name="password" placeholder="password" value={password} required onChange={onChange}/></td>
-                <td><input type="submit" value="Log In" /></td>
-                <td>{error}</td>
+                <td><input type="password" name="password" placeholder="password" value={password} required onChange={onChange} className="authInput" /></td>
+                <td><input type="submit" value="Log In" className="authSubmit"/></td>
+                <td>{error && <span className="authError"></span>}</td>
             </tr>
             </tbody>
             </table>
