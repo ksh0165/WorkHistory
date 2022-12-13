@@ -1,0 +1,21 @@
+package com.test.constants;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+@Component
+public class SearchConstant {
+	
+	public static int TIMEOUT;
+
+	/**
+	 * 생성자.
+	 */
+	public SearchConstant() {
+
+	}
+	
+	@Value("${TIMEOUT}")
+	public void setTimeout(int value) {
+		TIMEOUT = value;
+    }
+}
