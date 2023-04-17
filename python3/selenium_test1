@@ -23,4 +23,4 @@ def reuse_cookies_test(url):
     print(cookie_dict)
     driver.quit()
 
-reuse_cookies_test('https://www.open.go.kr/othicInfo/infoList/orginlInfoList.do')
+reuse_cookies_test('사이트')
