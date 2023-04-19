@@ -1,0 +1,22 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql8
+    ports:
+      - "8306:3306"
+      - "822:22"
+      - "880:80"
+      - "8577:7577"
+      - "8581:7581"
+      - "8614:7614"
+    networks:
+      - bridge
+    environment:
+      MYSQL_DATABASE: kwc
+      MYSQL_ROOT_PASSWORD: 1234
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - C:\etc\mysql:/var/lib/mysql
