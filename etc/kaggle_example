@@ -3,3 +3,47 @@
 #https://github.com/corazzon/KaggleStruggle/raw/master/word2vec-nlp-tutorial/data/labeledTrainData.tsv
 
 #https://github.com/corazzon/KaggleStruggle/tree/master
+
+
+# 유사 내용 설명 참고 : https://colab.research.google.com/github/corazzon/KaggleStruggle/blob/master/word2vec-nlp-tutorial/tutorial-part-4.ipynb#scrollTo=4xwb9NNgrdZI
+
+import pandas as pd
+import numpy as np
+import os
+import matplotlib.pyplot as plt
+import seaborn as sns
+%matplotlib inline
+
+
+train_data = pd.read_csv("./"+"labeledTrainData.tsv", header=0, delimiter="\t",quoting=3)
+
+
+train_data.head()
+
+
+print("파일크기: ")
+for file in os.listdir("./"):
+    if 'tsv' in file in file:
+        print(file.ljust(30)+str(round(os.path.getsize("./"+file)/1000000,2))+'MB')
+
+
+print('전체 학습 데이터의 개수: {}'.format(len(train_data)))
+
+
+
+train_length = train_data['review'].apply(len)
+plt.figure(figsize=(12,5))
+plt.hist(train_length, bins=200, alpha=0.5, color='r', label='word')
+plt.yscale('log',nonposy='clip')
+plt.title('Log-Histogram of length of review')
+plt.xlabel('Length of review')
+plt.ylabel('Number of review')
+
+
+
+fig, axe = plt.subplots(ncols=1)
+fig.set_size_inches(6,3)
+sns.countplot(train_data['sentiment'])
+
+
+
