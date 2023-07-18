@@ -3,11 +3,6 @@
 <!DOCTYPE html>
 <html lang="UTF-8">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-  <script src="/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-  <script src="/webjars/jquery/3.6.0/dist/jquery.min.js"></script>
 </head>
 <body>
 <br>
