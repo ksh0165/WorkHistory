@@ -1,15 +1,19 @@
 package com.example.demo.controller;
 
+import java.util.function.Supplier;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.common.RoleType;
 import com.example.demo.dto.User;
+import com.example.demo.exception.UserException;
 import com.example.demo.persistence.UserRepository;
 
 @Controller
@@ -26,7 +30,24 @@ public class UserController {
 	
 	@GetMapping("/user/get/{id}")
 	public @ResponseBody User getUser(@PathVariable int id) {
-		User findUser = userRepository.findById(id).get();
+		User findUser = userRepository.findById(id).orElseThrow(new Supplier<UserException>() {
+			@Override
+			public UserException get() {
+				return new UserException(id + "번 회원이 없습니다.");
+		}});
 		return findUser;
+	}
+	
+	@PutMapping("/user")
+	public @ResponseBody String updateUser(@RequestBody User user) {
+		User findUser = userRepository.findById(user.getId()).orElseThrow(()->{
+			return new UserException(user.getId() + "번 회원이 없습니다. ");
+		});
+		
+		findUser.setUsername(user.getUsername());
+		findUser.setPassword(user.getPassword());
+		findUser.setEmail(user.getEmail());
+		userRepository.save(findUser);
+		return "회원 수정 성공";
 	}
 }
