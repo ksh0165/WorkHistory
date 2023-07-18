@@ -46,4 +46,10 @@ public class IndexController {
 		System.out.println("delete 요청됨");
 		return "delete 값 : "+id;
 	}
+
+	@GetMapping("/auth/insertUser")
+	public String insertUser() {
+		return "user/insertUser";
+	}
+	
 }
