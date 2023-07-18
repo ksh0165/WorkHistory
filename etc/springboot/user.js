@@ -8,7 +8,25 @@ let userObject = {
 	},
 	
 	insertUser: function(){
-		alert("회원가입 요청됨");
+
+		let user = {
+			username : $("#username").val(),
+			password : $("#password").val(),
+			email : $("#email").val()
+		}
+		
+		$.ajax({
+			type: "POST",
+			url: "/auth/insertUser",
+			data: JSON.stringify(user),
+			contentType: "application/json; charset=utf-8"
+		}).done(function(response){
+			console.log(response);
+			location="/";
+		}).fail(function(error){
+			alert("에러발생: "+error);
+		})
+		
 	},
 }
 
