@@ -1,0 +1,51 @@
+package com.example.demo.controller;
+
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.dto.User;
+
+@RestController
+public class IndexController {
+	@GetMapping("/jsp")
+	public String jsp(Model model) {
+		System.out.println("jsp 파일이 요청됨");
+		model.addAttribute("username", "goods");
+		return "index";
+	}
+	
+	@GetMapping("/jblog")
+	public User httpGet() {
+		User findUser = User.builder()
+				.id(1)
+				.username("guest")
+				.password("guest123")
+				.email("guest@gmail.com")
+				.build();
+		return findUser;
+	}
+	
+	@PostMapping("/jblog")
+	public String httpPost(@RequestBody User user) {
+		System.out.println("post 요청됨 : "+user.toString());
+		return user.toString();
+	}
+	
+	@PutMapping("/jblog")
+	public String httpPut(@RequestBody User user) {
+		System.out.println("put 요청됨 : "+user.toString());
+		return user.toString();
+	}
+	
+	@DeleteMapping("/jblog")
+	public String httpDelete(@RequestParam int id) {
+		System.out.println("delete 요청됨");
+		return "delete 값 : "+id;
+	}
+}
