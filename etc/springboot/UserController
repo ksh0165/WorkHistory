@@ -50,4 +50,10 @@ public class UserController {
 		userRepository.save(findUser);
 		return "회원 수정 성공";
 	}
+
+	@DeleteMapping("/user/{id}")
+	public @ResponseBody String deleteUser(@PathVariable int id) {
+		userRepository.deleteById(id);
+		return "회원 삭제 성공";
+	}
 }
