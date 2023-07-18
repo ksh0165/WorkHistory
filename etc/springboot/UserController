@@ -33,6 +33,11 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	@GetMapping("/auth/insertUser")
+	public String insertUser() {
+		return "user/insertUser";
+	}
+	
 	@GetMapping("/user/get/{id}")
 	public @ResponseBody User getUser(@PathVariable int id) {
 		User findUser = userRepository.findById(id).orElseThrow(new Supplier<UserException>() {
