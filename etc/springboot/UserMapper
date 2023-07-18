@@ -1,48 +1,29 @@
-package com.example.demo.dto;
+package com.example.demo.mapper;
 
-import java.sql.Timestamp;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
-import org.hibernate.annotations.CreationTimestamp;
+import com.example.demo.dto.User;
 
-import com.example.demo.common.RoleType;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@Entity
-@Table(name="USERS")
-public class User {
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+@Mapper
+public interface UserMapper {
+	@Insert("INSERT INTO USERS(ID, USERNAME, PASSWORD, EMAIL) VALUES((SELECT NVL(MAX(ID),0)+1 FROM USERS), #{username}, #{password}, #{email})")
+	public void insertUser(User user);
 	
-	@Column(nullable=false,length=50,unique=true)
-	private String username;
+	@Update("UPDATE USERS PASSWORD = #{password}, EMAIL = #{email} WHERE ID = #{id}")
+	public void updateUser(User user);
 	
-	@Column(length=100)
-	private String password;
+	@Delete("DELETE USERS WHERE ID = #{id}")
+	public void deleteUser(User user);
 	
-	@Column(nullable=false, length=100)
-	private String email;
+	@Select("SELECT * FROM USERS WHERE USERNAME = #{username}")
+	public void getUser(User user);
 	
-	@Enumerated(EnumType.STRING)
-	private RoleType role;
-	
-	@CreationTimestamp
-	private Timestamp craeteDate;
+	@Select("SELECT * FROM USERS ORDER BY USERNAME DESC")
+	public List<User> getUserList();
 }
