@@ -1,0 +1,51 @@
+package com.example.demo.dto;
+
+import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.CreationTimestamp;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Entity 
+public class Post {
+	// Primary Key와 매핑되는 식별자 변수
+	@Id
+	// 1부터 시작하여 자동으로 1씩 증가하도록 증가 전략 설정 
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+		
+	@CreationTimestamp // 현재 시간이 기본 값으로 등록되도록 설정 
+	@Column(name="CREATEDATE")
+	private Timestamp createdate;
+		
+	@Column(nullable = false, length = 100)
+	private String title;
+	
+	@Lob
+	@Column(nullable = false)
+	private String content; // 비밀번호(해쉬를 이용한 암호화를 할 것이므로 사이즈를 넉넉히)
+	
+	private int cnt;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "userid")
+	private Users user; // 아이디
+	
+}
