@@ -17,12 +17,14 @@ public class IndexController {
 	PostService postService;
 	
 	@GetMapping({"","/"})
-	public String getPostList(Model model) {
-		model.addAttribute("postList", postService.getPostList());
+	public String getPostList(Model model, @PageableDefault(size=3, sort="id", direction= Direction.DESC) Pageable pageable) {
+		model.addAttribute("postList", postService.getPostList(pageable));
 		return "index";
 	}
+
+
 	
-}
+
 
 	
 	@GetMapping("/jblog")
