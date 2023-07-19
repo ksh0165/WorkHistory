@@ -12,11 +12,18 @@ import com.example.demo.dto.User;
 
 @Controller
 public class IndexController {
+	
+	@Autowired
+	PostService postService;
+	
 	@GetMapping({"","/"})
-	public String jsp() {
-		System.out.println("index.jsp 파일이 요청됨");
+	public String getPostList(Model model) {
+		model.addAttribute("postList", postService.getPostList());
 		return "index";
 	}
+	
+}
+
 	
 	@GetMapping("/jblog")
 	public User httpGet() {
