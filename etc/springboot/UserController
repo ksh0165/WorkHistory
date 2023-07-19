@@ -21,10 +21,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.dto.Post;
+import com.example.demo.dto.Reply;
 import com.example.demo.dto.ResponseDto;
 import com.example.demo.dto.Users;
 import com.example.demo.persistence.UserRepository;
 import com.example.demo.service.PostService;
+import com.example.demo.service.ReplyService;
 import com.example.demo.service.UserService;
 
 @Controller
@@ -37,6 +39,9 @@ public class UserController {
 	
 	@Autowired
 	private PostService postService;
+	
+	@Autowired
+	private ReplyService replyService;
 	
 	@GetMapping("/auth/insertUser")
 	public String insertUser() {
@@ -166,4 +171,16 @@ public class UserController {
 		return new ResponseDto<>(HttpStatus.OK.value(),id+"번 포스트를 삭제했습니다. ");
 	}
 
+	@PostMapping("/reply/{postId}")
+	public @ResponseBody ResponseDto<?> insertReply(@PathVariable int postId, @RequestBody Reply reply, HttpSession session){
+		Users principal = (Users) session.getAttribute("principal");
+		replyService.insertReply(postId, reply, principal);
+		return new ResponseDto<>(HttpStatus.OK.value(),postId+"번 포스트에 대한 댓글이 등록됐습니다. ");
+	}
+	
+	@DeleteMapping("/reply/{replyId}")
+	public @ResponseBody ResponseDto<?> deleteReply(@PathVariable int replyId){
+		replyService.deleteReply(replyId);
+		return new ResponseDto<>(HttpStatus.OK.value(), replyId + "번 댓글이 삭제됐습니다. ");
+	}
 }
