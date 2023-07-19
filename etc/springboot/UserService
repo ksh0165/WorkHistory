@@ -1,11 +1,13 @@
 package com.example.demo.service;
 
+import java.util.function.Supplier;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.common.RoleType;
-import com.example.demo.dto.User;
+import com.example.demo.dto.Users;
 import com.example.demo.persistence.UserRepository;
 
 @Service
@@ -14,8 +16,20 @@ public class UserService {
 	private UserRepository userRepository;
 	
 	@Transactional
-	public void insertUser(User user) {
+	public void insertUser(Users user) {
 		user.setRole(RoleType.USER);
 		userRepository.save(user);
+	}
+	
+	@Transactional(readOnly = true)
+	public Users getUser(String username) {
+//		Users findUser = userRepository.findByUsername(username).orElseGet(new Supplier<Users>(){
+//			@Override
+//			public Users get() {
+//				return new Users();
+//			}
+//		});
+		Users findUser = userRepository.findByUsername(username).orElseGet(()-> {return new Users();});
+		return findUser;
 	}
 }
