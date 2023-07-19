@@ -2,12 +2,16 @@
 <%@ include file="./layout/header.jsp" %>
 
 <div class="container-fluid mt-3">
-  <div class="card">
-  	<div class="card-body">
-  		<h4 class="card-title">포스트 제목</h4>
-  		<a href="#" class="btn btn-secondaray">상세보기</a>
-  	</div>
-  </div>
+	<c:if test="${!empty postList }">
+	  <div class="card">
+	  <c:forEach var="post" items="${postList }">
+	  	<div class="card-body">
+	  		<h4 class="card-title">${post.title}</h4>
+	  		<a href="#" class="btn btn-secondaray">상세보기</a>
+	  	</div>
+	  	</c:forEach>
+	  </div>
+  	</c:if>
 </div>
 
 <%@ include file="./layout/footer.jsp" %>
