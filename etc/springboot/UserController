@@ -1,7 +1,8 @@
 package com.example.demo.controller;
 
 import java.util.List;
-import java.util.function.Supplier;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,15 +15,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.demo.common.RoleType;
+import com.example.demo.dto.Post;
 import com.example.demo.dto.ResponseDto;
-import com.example.demo.dto.User;
-import com.example.demo.exception.UserException;
+import com.example.demo.dto.Users;
 import com.example.demo.persistence.UserRepository;
+import com.example.demo.service.PostService;
 import com.example.demo.service.UserService;
 
 @Controller
@@ -33,33 +33,36 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private PostService postService;
+	
 	@GetMapping("/auth/insertUser")
 	public String insertUser() {
 		return "user/insertUser";
 	}
 	
-	@GetMapping("/user/get/{id}")
-	public @ResponseBody User getUser(@PathVariable int id) {
-		User findUser = userRepository.findById(id).orElseThrow(new Supplier<UserException>() {
-			@Override
-			public UserException get() {
-				return new UserException(id + "번 회원이 없습니다.");
-		}});
-		return findUser;
-	}
+//	@GetMapping("/user/get/{id}")
+//	public @ResponseBody Users getUser(@PathVariable int id) {
+//		Users findUser = userRepository.findById(id).orElseThrow(new Supplier<UserException>() {
+//			@Override
+//			public UserException get() {
+//				return new UserException(id + "번 회원이 없습니다.");
+//		}});
+//		return findUser;
+//	}
 	
-	@PutMapping("/user")
-	public @ResponseBody String updateUser(@RequestBody User user) {
-		User findUser = userRepository.findById(user.getId()).orElseThrow(()->{
-			return new UserException(user.getId() + "번 회원이 없습니다. ");
-		});
-		
-		findUser.setUsername(user.getUsername());
-		findUser.setPassword(user.getPassword());
-		findUser.setEmail(user.getEmail());
-		userRepository.save(findUser);
-		return "회원 수정 성공";
-	}
+//	@PutMapping("/user")
+//	public @ResponseBody String updateUser(@RequestBody Users user) {
+//		Users findUser = userRepository.findById(user.getId()).orElseThrow(()->{
+//			return new UserException(user.getId() + "번 회원이 없습니다. ");
+//		});
+//		
+//		findUser.setUsername(user.getUsername());
+//		findUser.setPassword(user.getPassword());
+//		findUser.setEmail(user.getEmail());
+//		userRepository.save(findUser);
+//		return "회원 수정 성공";
+//	}
 	
 	@DeleteMapping("/user/{id}")
 	public @ResponseBody String deleteUser(@PathVariable int id) {
@@ -68,19 +71,69 @@ public class UserController {
 	}
 	
 	@GetMapping("/user/list")
-	public @ResponseBody List<User> getUserList(){
+	public @ResponseBody List<Users> getUserList(){
 		return userRepository.findAll();
 	}
 	
 	@GetMapping("/user/page/{page}")
-	public @ResponseBody Page<User> getUserListPaging(
+	public @ResponseBody Page<Users> getUserListPaging(
 			@PageableDefault(page = 0, size = 2, direction = Sort.Direction.DESC, sort= {"id","username"}) Pageable pageable){
 		return userRepository.findAll(pageable);
 	}
 	
 	@PostMapping("/auth/insertUser")
-	public @ResponseBody ResponseDto<?> insertUser(@RequestBody User user) {
-		userService.insertUser(user);
-		return new ResponseDto<>(HttpStatus.OK.value(),user.getUsername()+"님 회원가입 성공!");
+	public @ResponseBody ResponseDto<?> insertUser(@RequestBody Users user) {
+		
+		Users findUser = userService.getUser(user.getUsername());
+		if(findUser.getUsername() == null) {
+			userService.insertUser(user);
+			return new ResponseDto<>(HttpStatus.OK.value(),user.getUsername()+" 님 가입 성공. ");
+		}else {
+			return new ResponseDto<>(HttpStatus.BAD_REQUEST.value(),user.getUsername()+" 님은 이미 회원입니다. ");
+		}
+
+	}
+	
+	@GetMapping("/auth/login")
+	public String login() {
+		return "system/login";
+	}
+	
+	@PostMapping("/auth/login")
+	public @ResponseBody ResponseDto<?> login(@RequestBody Users user, HttpSession session){
+		Users findUser = userService.getUser(user.getUsername());
+		
+		if(findUser.getUsername() == null) {
+			return new ResponseDto<>(HttpStatus.BAD_REQUEST.value(),"아이디가 존재하지 않아요.");
+		}else {
+			if(user.getPassword().equals(findUser.getPassword())) {
+				session.setAttribute("principal", findUser);
+				return new ResponseDto<>(HttpStatus.OK.value(),user.getUsername()+"님 로그인 성공하셨습니다.");
+			}else {
+				return new ResponseDto<>(HttpStatus.BAD_REQUEST.value(),"비밀번호 오류!");
+			}
+		}
+	}
+	
+	@GetMapping("/auth/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
+	}
+	
+	@GetMapping("/post/insertPost")
+	public String insertPost() {
+		return "user/insertPost";
+	}
+	
+	@PostMapping("/post")
+	public @ResponseBody ResponseDto<?> insertPost(@RequestBody Post post, HttpSession session){
+		Users principal = (Users) session.getAttribute("principal");
+		post.setUser(principal);
+		post.setCnt(0);
+		
+		postService.insertPost(post);
+		
+		return new ResponseDto<>(HttpStatus.OK.value(),"새로운 포스트를 등록했습니다. ");
 	}
 }
